@@ -4,6 +4,13 @@
 
 .product-card {
   border: solid 1px red;
-  display: flex;
-  justify-content: space-between;
+}
+
+.table-row {
+  border: 1px solid red;
+  display: grid;
+}
+
+.form-container {
+  background-color: aqua;
 }

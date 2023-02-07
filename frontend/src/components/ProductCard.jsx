@@ -1,36 +1,27 @@
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import React from 'react';
+import { TableRow, TableCell, Button, Table } from '@mui/material';
 
-function ProductCard(props) {
+const ProductCard = (props) => {
   const product = props.product;
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardMedia
-        sx={{ height: 140 }}
-        image="https://i.insider.com/55a95cac2acae719008b7b66?width=1200&format=jpeg"
-        title="nike"
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {product.name}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Category: {product.category}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          ${product.price}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {product.quantity} left
-        </Typography>
-      </CardContent>
-    </Card>
+    <Table>
+      <tbody>
+        <TableRow className="table-row">
+          <TableCell>{product.id}</TableCell>
+          <TableCell>{product.name}</TableCell>
+          <TableCell>{product.category}</TableCell>
+          <TableCell>${product.price}</TableCell>
+          <TableCell>{product.quantity}</TableCell>
+          <TableCell>
+            <Button>Edit</Button>
+          </TableCell>
+          <TableCell>
+            <Button>Delete</Button>
+          </TableCell>
+        </TableRow>
+      </tbody>
+    </Table>
   );
-}
+};
 
 export default ProductCard;
