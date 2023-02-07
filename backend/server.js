@@ -1,11 +1,20 @@
 const dotenv = require('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
 
-app.listen(3001, () => {
-  console.log('Server works again and again!');
+app.use(express.json());
+
+const db = require('./models');
+
+// Routers
+const productRouter = require('./routes/Products');
+app.use('/products', productRouter);
+
+db.sequelize.sync().then(() => {
+  app.listen(3001, () => {
+    console.log('Server works again and again!');
+  });
 });
