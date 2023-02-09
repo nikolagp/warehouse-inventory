@@ -11,9 +11,9 @@ const Form = () => {
   });
 
   const handleSubmit = (formData) => {
-    axios
-      .post('http://localhost:3001/products', formData)
-      .then((response) => {});
+    axios.post('http://localhost:3001/products', formData).then((response) => {
+      console.log(response);
+    });
   };
 
   const handleChange = (e) => {
