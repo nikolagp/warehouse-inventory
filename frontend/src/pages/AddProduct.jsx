@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Button, TextField, Paper } from '@mui/material';
+import { Button, TextField, Paper, Box } from '@mui/material';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Form = () => {
+  let navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     category: '',
@@ -10,10 +12,18 @@ const Form = () => {
     quantity: '',
   });
 
-  const handleSubmit = (formData) => {
-    axios.post('http://localhost:3001/products', formData).then((response) => {
+  const handleSubmit = async (formData) => {
+    console.log(formData);
+    try {
+      const response = await axios.post(
+        'http://localhost:3001/products',
+        formData
+      );
+      navigate('/dashboard', { replace: true });
       console.log(response);
-    });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleChange = (e) => {
@@ -24,10 +34,17 @@ const Form = () => {
   };
 
   return (
-    <Paper>
+    <Box>
       <h2>Add Product</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
+
+      <form
+        align="center"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit(formData);
+        }}
+      >
+        <div align="center">
           <TextField
             label="Product Name"
             name="name"
@@ -57,7 +74,7 @@ const Form = () => {
           Submit
         </Button>
       </form>
-    </Paper>
+    </Box>
   );
 };
 
