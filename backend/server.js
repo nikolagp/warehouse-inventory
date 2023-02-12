@@ -14,6 +14,9 @@ const db = require('./models');
 const productRouter = require('./routes/Products');
 app.use('/products', productRouter);
 
+const usersRouter = require('./routes/Users');
+app.use('/auth', usersRouter);
+
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {
     console.log('Server works again and again!');
