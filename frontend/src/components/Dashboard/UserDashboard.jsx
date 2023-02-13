@@ -34,7 +34,7 @@ function Copyright(props) {
     >
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Created by Nikola G. Petrovski
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}

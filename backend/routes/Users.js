@@ -5,7 +5,15 @@ const bcrypt = require('bcrypt');
 
 router.post('/', async (req, res) => {
   const { username, password } = req.body;
+
   try {
+    const user = await Users.findOne({ where: { username: username } });
+
+    if (user) {
+      res.json({ error: 'User Already Exists' });
+      return;
+    }
+
     bcrypt.hash(password, 10).then((hash) => {
       Users.create({
         username: username,
@@ -20,16 +28,23 @@ router.post('/', async (req, res) => {
 
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
+  try {
+    const user = await Users.findOne({ where: { username: username } });
 
-  const user = await Users.findOne({ where: { username: username } });
+    if (!user) {
+      res.json({ error: "User Doesn't Exist" });
+      return;
+    }
 
-  if (!user) res.json({ error: "User Doesn't Exist" });
+    bcrypt.compare(password, user.password).then((match) => {
+      if (!match)
+        res.json({ error: 'Wrong Username And Password Combination' });
 
-  bcrypt.compare(password, user.password).then((match) => {
-    if (!match) res.json({ error: 'Wrong Username And Password Combination' });
-
-    res.json('YOU LOGGED IN!!!');
-  });
+      res.json('YOU LOGGED IN!!!');
+    });
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 module.exports = router;
