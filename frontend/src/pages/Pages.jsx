@@ -1,11 +1,12 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Dashboard from './Dashboard';
-import AddProduct from './AddProduct';
+// import AddProduct from ./unused/Dashboardct';
 import Product from './Product';
-import LogInForm from '../components/LogInForm';
+// import LogInForm from '../components/unused/LogInForm';
 import Register from '../components/Register';
 import Homepage from './Homepage';
+import AddProduct from './AddProduct';
+import UserDashboard from '../components/Dashboard/UserDashboard';
 
 function Pages() {
   return (
@@ -13,10 +14,10 @@ function Pages() {
       <Routes>
         {/* <Route path="/home" element={<Homepage />} /> */}
         <Route path="/" element={<Homepage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<UserDashboard />} />
         <Route path="/addproduct" element={<AddProduct />} />
         <Route path="/product/:id" element={<Product />} />
-        <Route path="/login" element={<LogInForm />} />
+        {/* <Route path="/login" element={<LogInForm />} /> */}
         <Route path="/register" element={<Register />} />
       </Routes>
     </div>

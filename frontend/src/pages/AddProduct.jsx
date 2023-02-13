@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
-import { Button, TextField, Paper, Box } from '@mui/material';
+import {
+  Button,
+  TextField,
+  Paper,
+  Box,
+  Container,
+  Typography,
+} from '@mui/material';
 import axios from 'axios';
+import Title from '../components/Dashboard/Title';
 import { useNavigate } from 'react-router-dom';
 
 const Form = () => {
@@ -11,8 +19,20 @@ const Form = () => {
     price: '',
     quantity: '',
   });
+  const [error, setError] = useState({
+    price: '',
+    quantity: '',
+  });
 
   const handleSubmit = async (formData) => {
+    // if (!Number(formData.price) || !Number(formData.quantity)) {
+    //   setError({
+    //     price: !Number(formData.price) ? 'Price should be a number' : '',
+    //     quantity: !Number(formData.quantity)
+    //       ? 'Quantity should be a number'
+    //       : '',
+    //   });
+    // }
     console.log(formData);
     try {
       const response = await axios.post(
@@ -35,7 +55,7 @@ const Form = () => {
 
   return (
     <Box>
-      <h2>Add Product</h2>
+      <Title>Add Product</Title>
 
       <form
         align="center"
@@ -44,7 +64,7 @@ const Form = () => {
           handleSubmit(formData);
         }}
       >
-        <div align="center">
+        <Box align="center">
           <TextField
             label="Product Name"
             name="name"
@@ -62,15 +82,29 @@ const Form = () => {
             name="price"
             value={formData.price}
             onChange={handleChange}
+            error={!!error.price}
+            helperText={error.price}
           />
           <TextField
             label="Quantity"
             name="quantity"
             value={formData.quantity}
             onChange={handleChange}
+            error={!!error.quantity}
+            helperText={error.quantity}
           />
-        </div>
-        <Button className="submit-button" type="submit">
+        </Box>
+        <Button
+          sx={{ marginTop: '1rem' }}
+          variant="contained"
+          type="submit"
+          disabled={
+            !formData.name ||
+            !formData.category ||
+            !formData.price ||
+            !formData.quantity
+          }
+        >
           Submit
         </Button>
       </form>

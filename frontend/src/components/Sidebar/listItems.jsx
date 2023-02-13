@@ -10,29 +10,36 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { Link } from 'react-router-dom';
 
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dashboard" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Add Product" />
-    </ListItemButton>
-
-    <React.Fragment>
+    <Link to="/dashboard">
       <ListItemButton>
         <ListItemIcon>
-          <LogoutIcon />
+          <DashboardIcon />
         </ListItemIcon>
-        <ListItemText primary="Logout" />
+        <ListItemText primary="Dashboard" />
       </ListItemButton>
+    </Link>
+    <Link to="/addproduct">
+      <ListItemButton>
+        <ListItemIcon>
+          <ShoppingCartIcon />
+        </ListItemIcon>
+        <ListItemText primary="Add Product" />
+      </ListItemButton>
+    </Link>
+
+    <React.Fragment>
+      <Link to="/">
+        <ListItemButton>
+          <ListItemIcon>
+            <LogoutIcon />
+          </ListItemIcon>
+          <ListItemText primary="Logout" />
+        </ListItemButton>
+      </Link>
     </React.Fragment>
     {/* <ListItemButton>
       <ListItemIcon>

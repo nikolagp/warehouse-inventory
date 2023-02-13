@@ -3,7 +3,7 @@ import React from 'react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 // import NavBar from '../components/NavBar';
-import UserDashboard from '../components/Dashboard/UserDashboard';
+import UserDashboard from '../../components/Dashboard/UserDashboard';
 
 // import { Link } from 'react-router-dom';
 

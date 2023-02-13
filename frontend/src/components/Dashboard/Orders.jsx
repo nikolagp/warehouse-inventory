@@ -80,7 +80,7 @@ export default function Orders() {
       <Title>Recent Orders</Title>
       <Table size="small">
         <TableHead>
-          <TableRow>
+          <TableRow sx={{ fontWeight: 'medium' }}>
             <TableCell>Id</TableCell>
             <TableCell>Name</TableCell>
             <TableCell>Category</TableCell>

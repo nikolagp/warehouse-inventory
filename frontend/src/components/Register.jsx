@@ -1,48 +1,74 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import Checkbox from '@mui/material/Checkbox';
 // import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+// import axios from 'axios';
+import { BACKEND_URL, registerUser } from '../services/authService';
+import { toast } from 'react-toastify';
+import { SET_LOGIN, SET_USERNAME } from '../redux/features/auth/authSlice';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
-export default function SignInSide() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+export default function Register() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const initialState = {
+    username: '',
+    password: '',
+  };
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState(initialState);
+  const { username, password } = formData;
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
     });
   };
+
+  const register = async (e) => {
+    e.preventDefault();
+
+    if (!username || !password) {
+      return toast.error('All fields are required');
+    }
+    if (password.length < 6) {
+      return toast.error('Passwords must be up to 6 characters');
+    }
+
+    setIsLoading(true);
+    try {
+      const data = await registerUser(formData);
+      console.log(data);
+      await dispatch(SET_LOGIN(true));
+      await dispatch(SET_USERNAME(data.username));
+      navigate('/dashboard');
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+    }
+  };
+
+  // const handleSubmit = (formData) => {
+  //   registerUser(formData);
+  //   setFormData(initialState);
+  // };
 
   return (
     <ThemeProvider theme={theme}>
@@ -54,7 +80,7 @@ export default function SignInSide() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
+            backgroundImage: 'url(/images/register-image.jpg)',
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light'
@@ -75,26 +101,23 @@ export default function SignInSide() {
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              {/* <LockOutlinedIcon /> */}
+              <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
               Register
             </Typography>
-            <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ mt: 1 }}
-            >
+            <Box component="form" noValidate onSubmit={register} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                id="name"
+                label="Username"
+                name="username"
+                autoComplete="name"
                 autoFocus
+                value={formData.username}
+                onChange={handleChange}
               />
               <TextField
                 margin="normal"
@@ -105,12 +128,11 @@ export default function SignInSide() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={formData.password}
+                onChange={handleChange}
               />
-              {/* <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              /> */}
               <Button
+                color="secondary"
                 type="submit"
                 fullWidth
                 variant="contained"
@@ -119,18 +141,12 @@ export default function SignInSide() {
                 Register
               </Button>
               <Grid container>
-                {/* <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid> */}
                 <Grid item>
                   <Link to="/" variant="body2">
-                    {'You already have an account? Sign In'}
+                    {'Already have an account? Sign In'}
                   </Link>
                 </Grid>
               </Grid>
-              {/* <Copyright sx={{ mt: 5 }} /> */}
             </Box>
           </Box>
         </Grid>
