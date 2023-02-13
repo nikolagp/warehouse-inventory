@@ -19,6 +19,6 @@ app.use('/auth', usersRouter);
 
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {
-    console.log('Server works again and again!');
+    console.log('Server works again!');
   });
 });
