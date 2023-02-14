@@ -4,35 +4,38 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
-// import Link from '@mui/material/Link';
+import axios from 'axios';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { registerUser } from '../services/authService';
-import { toast } from 'react-toastify';
-import { SET_LOGIN, SET_USERNAME } from '../redux/features/auth/authSlice';
-import { useDispatch } from 'react-redux';
+// import { BACKEND_URL, loginUser } from '../services/authService';
+// import { toast } from 'react-toastify';
+// import { SET_LOGIN, SET_USERNAME } from '../redux/features/auth/authSlice';
+// import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
-export default function Register() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const initialState = {
+export default function Login() {
+  const initialValues = {
     username: '',
     password: '',
   };
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState(initialState);
+  // const [username, setUsername] = useState('');
+  // const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState(initialValues);
   const { username, password } = formData;
+
+  const login = (e) => {
+    e.preventDefault();
+    const data = { username: username, password: password };
+    axios.post('http://localhost:3001/auth/login', data).then((response) => {
+      console.log(response.data);
+    });
+  };
 
   const handleChange = (e) => {
     setFormData({
@@ -40,34 +43,6 @@ export default function Register() {
       [e.target.name]: e.target.value,
     });
   };
-
-  const register = async (e) => {
-    e.preventDefault();
-
-    if (!username || !password) {
-      return toast.error('All fields are required');
-    }
-    if (password.length < 6) {
-      return toast.error('Passwords must be up to 6 characters');
-    }
-
-    setIsLoading(true);
-    try {
-      const data = await registerUser(formData);
-      console.log(data);
-      await dispatch(SET_LOGIN(true));
-      await dispatch(SET_USERNAME(data.username));
-      navigate('/dashboard');
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-    }
-  };
-
-  // const handleSubmit = (formData) => {
-  //   registerUser(formData);
-  //   setFormData(initialState);
-  // };
 
   return (
     <ThemeProvider theme={theme}>
@@ -79,7 +54,7 @@ export default function Register() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(/images/register-image.jpg)',
+            backgroundImage: 'url(/images/login-img.jpg)',
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light'
@@ -99,13 +74,13 @@ export default function Register() {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Register
+              Sign in
             </Typography>
-            <Box component="form" noValidate onSubmit={register} sx={{ mt: 1 }}>
+            <Box component="form" noValidate sx={{ mt: 1 }} onSubmit={login}>
               <TextField
                 margin="normal"
                 required
@@ -130,19 +105,19 @@ export default function Register() {
                 value={formData.password}
                 onChange={handleChange}
               />
+
               <Button
-                color="secondary"
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Register
+                Sign In
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link to="/" variant="body2">
-                    {'Already have an account? Sign In'}
+                  <Link to="/register" variant="body2">
+                    {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
               </Grid>

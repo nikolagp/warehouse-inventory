@@ -18,10 +18,10 @@ app.use(
 const db = require('./models');
 
 // Routers
-const productRouter = require('./routes/Products');
+const productRouter = require('./routes/productsRoute');
 app.use('/products', productRouter);
 
-const usersRouter = require('./routes/Users');
+const usersRouter = require('./routes/usersRoute');
 app.use('/auth', usersRouter);
 
 db.sequelize.sync().then(() => {
