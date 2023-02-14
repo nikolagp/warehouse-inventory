@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import { toast } from 'react-toastify';
 // import { SET_LOGIN, SET_USERNAME } from '../redux/features/auth/authSlice';
 // import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
@@ -28,12 +28,19 @@ export default function Login() {
   // const [password, setPassword] = useState('');
   const [formData, setFormData] = useState(initialValues);
   const { username, password } = formData;
+  const navigate = useNavigate();
 
   const login = (e) => {
     e.preventDefault();
     const data = { username: username, password: password };
     axios.post('http://localhost:3001/auth/login', data).then((response) => {
-      console.log(response.data);
+      // console.log(response.data.accessToken);
+      if (response.data.error) {
+        alert(response.data.error);
+      } else {
+        localStorage.setItem('accessToken', response.data.accessToken);
+        navigate('/dashboard');
+      }
     });
   };
 

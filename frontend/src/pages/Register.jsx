@@ -30,6 +30,7 @@ export default function Register() {
     password: '',
   };
   const [formData, setFormData] = useState(initialValues);
+  const navigate = useNavigate();
 
   // const validationSchema = Yup.object().shape({
   //   username: Yup.string().min(3).max(15).required(),
@@ -45,8 +46,12 @@ export default function Register() {
 
   const register = async (e) => {
     e.preventDefault();
-    axios.post('http://localhost:3001/auth', formData).then(() => {
-      console.log(formData);
+    axios.post('http://localhost:3001/auth', formData).then((response) => {
+      if (response.data.error) {
+        alert(response.data.error);
+      } else {
+        navigate('/dashboard');
+      }
     });
   };
 
@@ -123,7 +128,7 @@ export default function Register() {
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link to="/" variant="body2">
+                  <Link to="/login" variant="body2">
                     {'Already have an account? Sign In'}
                   </Link>
                 </Grid>
