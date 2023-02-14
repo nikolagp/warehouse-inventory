@@ -45,7 +45,9 @@ router.post('/login', async (req, res) => {
         'importantsecret'
       );
       // res.json('accessToken', accessToken);
-      res.status(200).json({ accessToken: accessToken });
+      // res.status(200).json({ accessToken: accessToken });
+      res.json({ accessToken: accessToken });
+      return;
     });
   } catch (err) {
     console.error(err);
