@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Users } = require('../models');
+const { validateToken } = require('../middleWare/AuthMiddleware');
 const bcrypt = require('bcrypt');
 const { sign } = require('jsonwebtoken');
 
@@ -52,6 +53,10 @@ router.post('/login', async (req, res) => {
   } catch (err) {
     console.error(err);
   }
+});
+
+router.get('/jwt', validateToken, (req, res) => {
+  res.json(req.user);
 });
 
 module.exports = router;

@@ -73,7 +73,7 @@ export default function Orders() {
     axios.get('http://localhost:3001/products').then((response) => {
       setListOfProducts(response.data);
     });
-  }, [listOfProducts]);
+  }, []);
 
   return (
     <React.Fragment>

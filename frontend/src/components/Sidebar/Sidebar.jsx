@@ -13,11 +13,17 @@ import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import LogoutIcon from '@mui/icons-material/Logout';
 
-import { mainListItems, secondaryListItems } from './listItems';
+// import { mainListItems, secondaryListItems } from './listItems';
 
 const drawerWidth = 240;
 
@@ -68,6 +74,7 @@ const Drawer = styled(MuiDrawer, {
 const mdTheme = createTheme();
 
 function Sidebar(props) {
+  const { username, logout } = props;
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -103,7 +110,7 @@ function Sidebar(props) {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              Welcome, {username}
             </Typography>
           </Toolbar>
         </AppBar>
@@ -123,9 +130,39 @@ function Sidebar(props) {
           </Toolbar>
           <Divider />
           <List component="nav">
-            {mainListItems}
+            {/* {mainListItems} */}
+            <React.Fragment>
+              <Link to="/dashboard">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <DashboardIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Dashboard" />
+                </ListItemButton>
+              </Link>
+              <Link to="/addproduct">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <ShoppingCartIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Add Product" />
+                </ListItemButton>
+              </Link>
+
+              <React.Fragment>
+                <Link to="/">
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <LogoutIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Logout" onClick={logout} />
+                  </ListItemButton>
+                </Link>
+              </React.Fragment>
+            </React.Fragment>
+
             <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
+            {/* {secondaryListItems} */}
           </List>
         </Drawer>
         <Box
