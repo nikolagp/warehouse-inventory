@@ -4,38 +4,28 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
-// import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-// import { registerUser } from '../services/authService';
-// import { toast } from 'react-toastify';
-// import { SET_LOGIN, SET_USERNAME } from '../redux/features/auth/authSlice';
-// import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-// import { Formik, Form, Field, ErrorMessage } from 'formik';
-// import * as Yup from 'yup';
+import { SET_LOGIN, SET_NAME } from '../redux/features/auth/authSlice';
+import { useDispatch } from 'react-redux';
 
+const theme = createTheme();
 export default function Register() {
-  const theme = createTheme();
-
   const initialValues = {
     username: '',
     password: '',
   };
   const [formData, setFormData] = useState(initialValues);
+  const { username, password } = formData;
   const navigate = useNavigate();
-
-  // const validationSchema = Yup.object().shape({
-  //   username: Yup.string().min(3).max(15).required(),
-  //   password: Yup.string().min(4).max(20).required(),
-  // });
+  const dispatch = useDispatch();
+  const [name, setName] = useState('');
 
   const handleChange = (e) => {
     setFormData({
@@ -46,13 +36,21 @@ export default function Register() {
 
   const register = async (e) => {
     e.preventDefault();
-    axios.post('http://localhost:3001/auth', formData).then((response) => {
-      if (response.data.error) {
-        alert(response.data.error);
-      } else {
-        navigate('/dashboard');
-      }
-    });
+
+    await axios
+      .post('http://localhost:3001/auth', formData)
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+          navigate('/');
+        } else {
+          setName(username);
+          navigate('/dashboard');
+        }
+      });
+    await dispatch(SET_LOGIN(true));
+    await dispatch(SET_NAME(username));
+    console.log(username, formData);
   };
 
   return (
@@ -102,7 +100,7 @@ export default function Register() {
                 name="username"
                 autoComplete="name"
                 autoFocus
-                value={formData.username}
+                value={username}
                 onChange={handleChange}
               />
               <TextField
@@ -114,7 +112,7 @@ export default function Register() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                value={formData.password}
+                value={password}
                 onChange={handleChange}
               />
               <Button

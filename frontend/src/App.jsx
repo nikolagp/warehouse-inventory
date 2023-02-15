@@ -12,15 +12,16 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Login from './pages/Login';
 import { AuthContext } from './helpers/AuthContext';
+import { SET_LOGIN } from './redux/features/auth/authSlice';
 
-// axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true;
 
 function App() {
-  const [authState, setAuthState] = useState({
-    username: '',
-    id: 0,
-    status: null,
-  });
+  // const [authState, setAuthState] = useState({
+  //   username: '',
+  //   id: 0,
+  //   status: null,
+  // });
 
   useEffect(() => {
     axios
@@ -30,22 +31,17 @@ function App() {
         },
       })
       .then((response) => {
-        if (response.data.error) {
-          setAuthState({ ...authState, status: false });
-        } else {
-          setAuthState({
-            username: response.data.username,
-            id: response.data.id,
-            status: true,
-          });
-        }
+        localStorage.setItem('accessToken', response.data.accessToken);
       });
   }, []);
 
-  const logout = () => {
-    localStorage.removeItem('accessToken');
-    setAuthState({ ...authState, status: false });
-  };
+  // const logout = () => {
+  //   localStorage.removeItem('accessToken');
+  //   localStorage.removeItem('name');
+  //   localStorage.removeItem('id');
+  //   SET_LOGIN(false);
+  //   // setAuthState({ ...authState, status: false });
+  // };
   // if (authState.status === null) {
   //   return (
   //     <div>
@@ -58,38 +54,37 @@ function App() {
     <div className="App">
       <BrowserRouter>
         {/* <ToastContainer /> */}
-        <AuthContext.Provider value={{ authState, setAuthState }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route
-              path="/dashboard"
-              element={
-                <Sidebar username={authState.username} logout={logout}>
-                  <UserDashboard />
-                </Sidebar>
-              }
-            />
-            <Route
-              path="/addproduct"
-              element={
-                <Sidebar>
-                  <AddProduct />
-                </Sidebar>
-              }
-            />
-            <Route
-              path="/product/:id"
-              element={
-                <Sidebar>
-                  <Product />
-                </Sidebar>
-              }
-            />
-            {/* <Route path="/*" element={<Home to="/" />} /> */}
-          </Routes>
-        </AuthContext.Provider>
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/dashboard"
+            element={
+              <Sidebar>
+                <UserDashboard />
+              </Sidebar>
+            }
+          />
+          <Route
+            path="/addproduct"
+            element={
+              <Sidebar>
+                <AddProduct />
+              </Sidebar>
+            }
+          />
+          <Route
+            path="/product/:id"
+            element={
+              <Sidebar>
+                <Product />
+              </Sidebar>
+            }
+          />
+          {/* <Route path="/*" element={<Home to="/" />} /> */}
+        </Routes>
       </BrowserRouter>
     </div>
   );

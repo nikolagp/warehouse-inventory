@@ -13,9 +13,9 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import { BACKEND_URL, loginUser } from '../services/authService';
 // import { toast } from 'react-toastify';
-// import { SET_LOGIN, SET_USERNAME } from '../redux/features/auth/authSlice';
-// import { useDispatch } from 'react-redux';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { SET_LOGIN, SET_NAME, SET_ID } from '../redux/features/auth/authSlice';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
@@ -24,24 +24,36 @@ export default function Login() {
     username: '',
     password: '',
   };
-  // const [username, setUsername] = useState('');
-  // const [password, setPassword] = useState('');
+
   const [formData, setFormData] = useState(initialValues);
   const { username, password } = formData;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const login = (e) => {
+  const [id, setId] = useState('');
+  const [name, setName] = useState('');
+
+  const login = async (e) => {
     e.preventDefault();
-    const data = { username: username, password: password };
-    axios.post('http://localhost:3001/auth/login', data).then((response) => {
-      // console.log(response.data.accessToken);
-      if (response.data.error) {
-        alert(response.data.error);
-      } else {
-        localStorage.setItem('accessToken', response.data.accessToken);
-        navigate('/dashboard');
-      }
-    });
+
+    try {
+      const data = { username: username, password: password };
+      axios.post('http://localhost:3001/auth/login', data).then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          localStorage.setItem('accessToken', response.data.accessToken);
+          setName(response.data.name);
+          setId(response.data.id);
+        }
+      });
+      await dispatch(SET_LOGIN(true));
+      await dispatch(SET_NAME(name));
+      await dispatch(SET_ID(id));
+      navigate('/dashboard');
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const handleChange = (e) => {

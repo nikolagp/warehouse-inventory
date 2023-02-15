@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
         username: username,
         password: hash,
       });
-      res.json('SUCCESS');
+      res.json('Successfully created');
     });
   } catch (err) {
     console.error(err);
@@ -47,7 +47,7 @@ router.post('/login', async (req, res) => {
       );
       // res.json('accessToken', accessToken);
       // res.status(200).json({ accessToken: accessToken });
-      res.json({ accessToken: accessToken });
+      res.json({ accessToken: accessToken, name: user.username, id: user.id });
       return;
     });
   } catch (err) {
