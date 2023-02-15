@@ -23,17 +23,18 @@ function App() {
   //   status: null,
   // });
 
-  useEffect(() => {
-    axios
-      .get('http://localhost:3001/auth/jwt', {
-        headers: {
-          accessToken: localStorage.getItem('accessToken'),
-        },
-      })
-      .then((response) => {
-        localStorage.setItem('accessToken', response.data.accessToken);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get('http://localhost:3001/auth/jwt', {
+  //       headers: {
+  //         accessToken: localStorage.getItem('accessToken'),
+  //       },
+  //     })
+  //     .then((response) => {
+  //       localStorage.setItem('accessToken', response.data.accessToken);
+  //       localStorage.setItem('name', response.data.username);
+  //     });
+  // }, []);
 
   // const logout = () => {
   //   localStorage.removeItem('accessToken');
