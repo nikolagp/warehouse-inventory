@@ -3,30 +3,21 @@
   /* text-align: center; */
 }
 
-.product-card {
+/* .product-card {
   border: solid 1px red;
-}
+} */
 
-.table-row {
+/* .table-row {
   border: 1px solid red;
   display: grid;
-}
+} */
 
-.form-container {
+/* .form-container {
   background-color: aqua;
-}
-
-/* .pages {
-  padding: 4rem 0;
 } */
 
 li {
   list-style: none;
-}
-
-.homePage {
-  height: 100vh;
-  background-color: aquamarine;
 }
 
 a {
