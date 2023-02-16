@@ -11,7 +11,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { SET_LOGIN, SET_NAME, SET_ID } from '../redux/features/auth/authSlice';
+import { SET_LOGIN, SET_NAME } from '../redux/features/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
