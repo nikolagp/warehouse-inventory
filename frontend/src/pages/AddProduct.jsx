@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  TextField,
-  Paper,
-  Box,
-  Container,
-  Typography,
-} from '@mui/material';
+import { Button, TextField, Box } from '@mui/material';
 import axios from 'axios';
 import Title from '../components/Dashboard/Title';
 import { useNavigate } from 'react-router-dom';
@@ -25,14 +18,6 @@ const Form = () => {
   });
 
   const handleSubmit = async (formData) => {
-    // if (!Number(formData.price) || !Number(formData.quantity)) {
-    //   setError({
-    //     price: !Number(formData.price) ? 'Price should be a number' : '',
-    //     quantity: !Number(formData.quantity)
-    //       ? 'Quantity should be a number'
-    //       : '',
-    //   });
-    // }
     console.log(formData);
     try {
       const response = await axios.post(
@@ -57,7 +42,8 @@ const Form = () => {
     <Box>
       <Title>Add Product</Title>
 
-      <form
+      <Box
+        component="form"
         align="center"
         onSubmit={(e) => {
           e.preventDefault();
@@ -107,7 +93,7 @@ const Form = () => {
         >
           Submit
         </Button>
-      </form>
+      </Box>
     </Box>
   );
 };
