@@ -9,11 +9,8 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-// import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -24,8 +21,6 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useSelector } from 'react-redux';
 import { selectName, SET_LOGIN } from '../../redux/features/auth/authSlice';
-
-// import { mainListItems, secondaryListItems } from './listItems';
 
 const drawerWidth = 240;
 
@@ -76,7 +71,6 @@ const Drawer = styled(MuiDrawer, {
 const mdTheme = createTheme();
 
 function Sidebar(props) {
-  // const { username } = props;
   const name = useSelector(selectName);
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -140,7 +134,6 @@ function Sidebar(props) {
           </Toolbar>
           <Divider />
           <List component="nav">
-            {/* {mainListItems} */}
             <React.Fragment>
               <Link to="/dashboard">
                 <ListItemButton>
@@ -172,7 +165,6 @@ function Sidebar(props) {
             </React.Fragment>
 
             <Divider sx={{ my: 1 }} />
-            {/* {secondaryListItems} */}
           </List>
         </Drawer>
         <Box
