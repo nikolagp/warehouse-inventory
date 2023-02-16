@@ -45,7 +45,6 @@ router.post('/login', async (req, res) => {
         { username: user.username, id: user.id },
         'importantsecret'
       );
-      // res.json('accessToken', accessToken);
       // res.status(200).json({ accessToken: accessToken });
       res.json({ accessToken: accessToken, name: user.username, id: user.id });
       return;

@@ -7,10 +7,13 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Grid } from '@mui/material';
+import { Grid, Tooltip } from '@mui/material';
 import Item from '@mui/material/ListItem';
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import { useNavigate } from 'react-router-dom';
 
 function Product(props) {
+  const navigate = useNavigate();
   let { id } = useParams();
   const [products, setProducts] = useState({});
 
@@ -19,6 +22,12 @@ function Product(props) {
       setProducts(response.data);
     });
   }, []);
+
+  const deleteProduct = (id) => {
+    axios.delete(`http://localhost:3001/products/${id}`).then(() => {
+      navigate('/dashboard');
+    });
+  };
 
   return (
     <Card sx={{ maxWidth: 345, mt: 2 }}>
@@ -60,7 +69,17 @@ function Product(props) {
           </Grid>
           <Grid item xs={6}>
             <Item>
-              <Button size="small">Delete</Button>
+              <Tooltip title="Delete product">
+                <Button
+                  cursor="pointer"
+                  onClick={() => {
+                    deleteProduct(products.id);
+                  }}
+                >
+                  Delete
+                </Button>
+              </Tooltip>
+              {/* <Button size="small" onClick={}>Delete</Button> */}
             </Item>
           </Grid>
         </Grid>

@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'https://nikwarehouse.vercel.app'],
+    origin: ['http://localhost:3000'],
     credentials: true,
   })
 );

@@ -23,7 +23,7 @@ export default function Login() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(/images/login-img.jpg)',
+            backgroundImage: 'url(/images/home.jpg)',
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light'
@@ -43,11 +43,11 @@ export default function Login() {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+            <Avatar sx={{ m: 1 }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Sign in / Register
             </Typography>
             <Box component="form" noValidate sx={{ mt: 1 }}>
               <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>

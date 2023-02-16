@@ -9,8 +9,8 @@ import TableRow from '@mui/material/TableRow';
 import Title from './Title';
 import { Link } from 'react-router-dom';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
-import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import { Tooltip } from '@mui/material';
 
 export default function Orders() {
   const [listOfProducts, setListOfProducts] = useState([]);
@@ -21,20 +21,30 @@ export default function Orders() {
     });
   }, []);
 
+  const deleteProduct = (id) => {
+    axios.delete(`http://localhost:3001/products/${id}`).then((response) => {
+      alert('Are you sure you want to delete');
+      setListOfProducts(listOfProducts.filter((product) => product.id !== id));
+    });
+  };
+
   return (
     <React.Fragment>
       <Title>Recent Orders</Title>
       <Table size="small">
         <TableHead>
-          <TableRow sx={{ fontWeight: 'medium' }}>
-            <TableCell>Id</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Category</TableCell>
-            <TableCell>Pricing</TableCell>
-            <TableCell>Quantity</TableCell>
-            <TableCell align="center">Preview</TableCell>
-            <TableCell align="center">Edit</TableCell>
-            <TableCell align="center">Delete</TableCell>
+          <TableRow sx={{ backgroundColor: '#f0f0f0', fontWeight: 'bold' }}>
+            <TableCell sx={{ fontWeight: 'bold' }}>Id</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Name</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Category</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Pricing</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Quantity</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }} align="center">
+              Preview
+            </TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }} align="center">
+              Delete
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -47,14 +57,20 @@ export default function Orders() {
               <TableCell>{product.quantity}</TableCell>
               <TableCell align="center">
                 <Link to={`/product/${product.id}`}>
-                  <RemoveRedEyeOutlinedIcon />
+                  <Tooltip title="Preview product">
+                    <RemoveRedEyeOutlinedIcon cursor="pointer" />
+                  </Tooltip>
                 </Link>
               </TableCell>
               <TableCell align="center">
-                <BorderColorOutlinedIcon />
-              </TableCell>
-              <TableCell align="center">
-                <DeleteForeverOutlinedIcon />
+                <Tooltip title="Delete product">
+                  <DeleteForeverOutlinedIcon
+                    cursor="pointer"
+                    onClick={() => {
+                      deleteProduct(product.id);
+                    }}
+                  />
+                </Tooltip>
               </TableCell>
             </TableRow>
           ))}

@@ -40,7 +40,9 @@ const Form = () => {
 
   return (
     <Box>
-      <Title>Add Product</Title>
+      <Box sx={{ margin: '2rem' }} align="center">
+        <Title>Add Product</Title>
+      </Box>
 
       <Box
         component="form"
@@ -52,18 +54,21 @@ const Form = () => {
       >
         <Box align="center">
           <TextField
+            sx={{ margin: '1rem' }}
             label="Product Name"
             name="name"
             value={formData.name}
             onChange={handleChange}
           />
           <TextField
+            sx={{ margin: '1rem' }}
             label="Category"
             name="category"
             value={formData.category}
             onChange={handleChange}
           />
           <TextField
+            sx={{ margin: '1rem' }}
             label="Price"
             name="price"
             value={formData.price}
@@ -72,6 +77,7 @@ const Form = () => {
             helperText={error.price}
           />
           <TextField
+            sx={{ margin: '1rem' }}
             label="Quantity"
             name="quantity"
             value={formData.quantity}
