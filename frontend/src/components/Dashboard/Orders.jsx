@@ -11,22 +11,38 @@ import { Link } from 'react-router-dom';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { Tooltip } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getProductsFetch,
+  deleteProductSuccess,
+} from '../../redux/features/auth/authSlice';
 
 export default function Orders() {
-  const [listOfProducts, setListOfProducts] = useState([]);
+  // const [listOfProducts, setListOfProducts] = useState([]);
+  const products = useSelector((state) => state.auth.products);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    axios.get('http://localhost:3001/products').then((response) => {
-      setListOfProducts(response.data);
-    });
-  }, []);
+    dispatch(getProductsFetch());
+  }, [dispatch]);
 
   const deleteProduct = (id) => {
-    axios.delete(`http://localhost:3001/products/${id}`).then((response) => {
-      alert('Are you sure you want to delete');
-      setListOfProducts(listOfProducts.filter((product) => product.id !== id));
-    });
+    dispatch(deleteProductSuccess(id));
+    console.log(id);
   };
+
+  // useEffect(() => {
+  //   axios.get('http://localhost:3001/products').then((response) => {
+  //     setListOfProducts(response.data);
+  //   });
+  // }, []);
+
+  // const deleteProduct = (id) => {
+  //   axios.delete(`http://localhost:3001/products/${id}`).then((response) => {
+  //     alert('Are you sure you want to delete');
+  //     setListOfProducts(listOfProducts.filter((product) => product.id !== id));
+  //   });
+  // };
 
   return (
     <React.Fragment>
@@ -48,7 +64,7 @@ export default function Orders() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {listOfProducts.map((product) => (
+          {products.map((product) => (
             <TableRow key={product.id}>
               <TableCell>{product.id}</TableCell>
               <TableCell>{product.name}</TableCell>

@@ -3,8 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 const name = JSON.parse(localStorage.getItem('name'));
 
 const initialState = {
+  isLoading: false,
   isLoggedIn: false,
   name: name ? name : '',
+  users: [],
+  products: [],
 };
 
 const authSlice = createSlice({
@@ -18,10 +21,28 @@ const authSlice = createSlice({
       localStorage.setItem('name', JSON.stringify(action.payload));
       state.name = action.payload;
     },
+    getProductsFetch(state) {
+      state.isLoading = true;
+    },
+    getProductsSuccess(state, action) {
+      state.products = action.payload;
+      state.isLoading = false;
+    },
+    deleteProductSuccess(state, action) {
+      state.products = state.products.filter(
+        (product) => product.id !== action.payload
+      );
+    },
   },
 });
 
-export const { SET_LOGIN, SET_NAME } = authSlice.actions;
+export const {
+  SET_LOGIN,
+  SET_NAME,
+  getProductsFetch,
+  getProductsSuccess,
+  deleteProductSuccess,
+} = authSlice.actions;
 
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const selectName = (state) => state.auth.name;
