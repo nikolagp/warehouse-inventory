@@ -14,7 +14,7 @@ import { Tooltip } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getProductsFetch,
-  deleteProductSuccess,
+  deleteProduct,
 } from '../../redux/features/auth/authSlice';
 
 export default function Orders() {
@@ -26,8 +26,8 @@ export default function Orders() {
     dispatch(getProductsFetch());
   }, [dispatch]);
 
-  const deleteProduct = (id) => {
-    dispatch(deleteProductSuccess(id));
+  const handdleDeleteProduct = (id) => {
+    dispatch(deleteProduct(id));
     console.log(id);
   };
 
@@ -83,7 +83,7 @@ export default function Orders() {
                   <DeleteForeverOutlinedIcon
                     cursor="pointer"
                     onClick={() => {
-                      deleteProduct(product.id);
+                      handdleDeleteProduct(product.id);
                     }}
                   />
                 </Tooltip>

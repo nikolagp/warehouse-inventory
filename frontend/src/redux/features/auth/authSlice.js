@@ -28,10 +28,13 @@ const authSlice = createSlice({
       state.products = action.payload;
       state.isLoading = false;
     },
-    deleteProductSuccess(state, action) {
+    deleteProduct(state, action) {
       state.products = state.products.filter(
         (product) => product.id !== action.payload
       );
+    },
+    registerUsers(state, action) {
+      state.users = action.payload;
     },
   },
 });
@@ -41,7 +44,8 @@ export const {
   SET_NAME,
   getProductsFetch,
   getProductsSuccess,
-  deleteProductSuccess,
+  deleteProduct,
+  registerUsers,
 } = authSlice.actions;
 
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;

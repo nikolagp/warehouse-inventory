@@ -1,5 +1,9 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { getProductsSuccess, deleteProductSuccess } from './auth/authSlice';
+import {
+  getProductsSuccess,
+  deleteProduct,
+  registerUsers,
+} from './auth/authSlice';
 import axios from 'axios';
 
 function* workGetProductsFetch() {
@@ -23,7 +27,16 @@ function* workDeleteProduct(action) {
       method: 'DELETE',
     })
   );
-  yield put(deleteProductSuccess(productId));
+  yield put(deleteProduct(productId));
+}
+
+function* workRegisterUsers(action) {
+  const formData = action.payload;
+  const users = yield call(() =>
+    axios.post('http://localhost:3001/auth', formData)
+  );
+  const newUser = yield users.data;
+  yield put(registerUsers(newUser));
 }
 
 // function* workDeleteProduct({ payload: id }) {
@@ -39,6 +52,7 @@ function* workDeleteProduct(action) {
 function* productsSaga() {
   yield takeEvery('auth/getProductsFetch', workGetProductsFetch);
   yield takeEvery('auth/deleteProduct', workDeleteProduct);
+  yield takeEvery('auth/registerUsers', workRegisterUsers);
 }
 
 export default productsSaga;
