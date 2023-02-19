@@ -36,9 +36,6 @@ const authSlice = createSlice({
     registerUsers(state, action) {
       state.users = action.payload;
     },
-    loginUsers(state, action) {
-      state.users = action.payload;
-    },
   },
 });
 
@@ -49,7 +46,6 @@ export const {
   getProductsSuccess,
   deleteProduct,
   registerUsers,
-  loginUsers,
 } = authSlice.actions;
 
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;

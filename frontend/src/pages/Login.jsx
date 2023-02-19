@@ -11,11 +11,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {
-  SET_LOGIN,
-  SET_NAME,
-  loginUsers,
-} from '../redux/features/auth/authSlice';
+import { SET_LOGIN, SET_NAME } from '../redux/features/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -37,16 +33,15 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      // const data = { username: username, password: password };
-      // axios.post('http://localhost:3001/auth/login', data).then((response) => {
-      //   if (response.data.error) {
-      //     alert(response.data.error);
-      //   } else {
-      //     localStorage.setItem('accessToken', response.data.accessToken);
-      //     setName(response.data.name);
-      //   }
-      // });
-      await dispatch(loginUsers(formData));
+      const data = { username: username, password: password };
+      axios.post('http://localhost:3001/auth/login', data).then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          localStorage.setItem('accessToken', response.data.accessToken);
+          setName(response.data.name);
+        }
+      });
       await dispatch(SET_LOGIN(true));
       await dispatch(SET_NAME(username));
       navigate('/dashboard');

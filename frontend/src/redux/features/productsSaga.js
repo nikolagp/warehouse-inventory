@@ -9,7 +9,6 @@ import {
   getProductsSuccess,
   deleteProduct,
   registerUsers,
-  loginUsers,
 } from './auth/authSlice';
 import axios from 'axios';
 
@@ -46,6 +45,7 @@ function* workRegisterUsers(action) {
   yield put(registerUsers(newUser));
 }
 
+<<<<<<< HEAD
 function* workLoginUsers(action) {
   const formData = action.payload;
   const { username, password } = formData;
@@ -56,6 +56,8 @@ function* workLoginUsers(action) {
   yield put(loginUsers(logUser));
 }
 
+=======
+>>>>>>> parent of 7af39d7 (login user via redux-saga)
 // function* workDeleteProduct({ payload: id }) {
 //   yield call(() =>
 //     fetch(`http://localhost:3001/products/${id}`, {
@@ -69,7 +71,6 @@ function* productsSaga() {
   yield takeEvery('auth/getProductsFetch', workGetProductsFetch);
   // yield takeLatest('auth/deleteProduct', workDeleteProduct);
   yield takeEvery('auth/registerUsers', workRegisterUsers);
-  yield takeEvery('auth/loginUsers', workLoginUsers);
 }
 
 export default productsSaga;
