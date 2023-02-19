@@ -1,14 +1,9 @@
-import {
-  call,
-  put,
-  takeEvery,
-  takeLatest,
-  takeMaybe,
-} from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import {
   getProductsSuccess,
   deleteProduct,
   registerUsers,
+  loginUsers,
 } from './auth/authSlice';
 import axios from 'axios';
 
@@ -26,15 +21,15 @@ function* workGetProductsFetch() {
   yield put(getProductsSuccess(formattedProducts));
 }
 
-// function* workDeleteProduct(action) {
-//   const productId = action.payload;
-//   yield call(() =>
-//     fetch(`http://localhost:3001/products/${productId}`, {
-//       method: 'DELETE',
-//     })
-//   );
-//   yield put(deleteProduct(productId));
-// }
+function* workDeleteProduct(action) {
+  const productId = action.payload;
+  yield call(() =>
+    fetch(`http://localhost:3001/products/${productId}`, {
+      method: 'DELETE',
+    })
+  );
+  yield put(deleteProduct(productId));
+}
 
 function* workRegisterUsers(action) {
   const formData = action.payload;
@@ -45,32 +40,30 @@ function* workRegisterUsers(action) {
   yield put(registerUsers(newUser));
 }
 
-<<<<<<< HEAD
 function* workLoginUsers(action) {
   const formData = action.payload;
-  const { username, password } = formData;
-  const data = { username: username, password: password };
-  const response = yield axios.post('http://localhost:3001/auth/login', data);
-  localStorage.setItem('accessToken', response.data.accessToken);
-  const logUser = response.data.accessToken;
-  yield put(loginUsers(logUser));
+  const data = { username: formData.username, password: formData.password };
+  const user = axios.post('http://localhost:3001/auth/login', data);
+
+  const newUser = yield users.data;
+  yield put(loginUsers(newUser));
 }
 
-=======
->>>>>>> parent of 7af39d7 (login user via redux-saga)
 // function* workDeleteProduct({ payload: id }) {
 //   yield call(() =>
 //     fetch(`http://localhost:3001/products/${id}`, {
 //       method: 'DELETE',
+//       // 'headers: { 'Content-Type': 'application/json' },
 //     })
 //   );
-//   yield put(deleteProduct(id));
+//   yield put(deleteProductSuccess(id));
 // }
 
 function* productsSaga() {
   yield takeEvery('auth/getProductsFetch', workGetProductsFetch);
-  // yield takeLatest('auth/deleteProduct', workDeleteProduct);
+  yield takeEvery('auth/deleteProduct', workDeleteProduct);
   yield takeEvery('auth/registerUsers', workRegisterUsers);
+  yield takeEvery('auth/loginUsers', workLoginUsers);
 }
 
 export default productsSaga;
