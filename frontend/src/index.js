@@ -1,7 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+<<<<<<< HEAD
 // import { store } from './redux/store';
+=======
+
+import { store } from './redux/store';
+>>>>>>> parent of 1606f48 (installed redux-saga and fetched products)
 import { Provider } from 'react-redux';
 // import createSagaMiddleware from '@redux-saga/core';
 import createSagaMiddleware from '@redux-saga/core';

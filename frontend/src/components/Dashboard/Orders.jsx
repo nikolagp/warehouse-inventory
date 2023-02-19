@@ -11,38 +11,36 @@ import { Link } from 'react-router-dom';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { Tooltip } from '@mui/material';
+<<<<<<< HEAD
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getProductsFetch,
   deleteProduct,
 } from '../../redux/features/auth/authSlice';
+=======
+>>>>>>> parent of 1606f48 (installed redux-saga and fetched products)
 
 export default function Orders() {
-  // const [listOfProducts, setListOfProducts] = useState([]);
-  const products = useSelector((state) => state.auth.products);
-  const dispatch = useDispatch();
+  const [listOfProducts, setListOfProducts] = useState([]);
 
   useEffect(() => {
-    dispatch(getProductsFetch());
-  }, [dispatch]);
+    axios.get('http://localhost:3001/products').then((response) => {
+      setListOfProducts(response.data);
+    });
+  }, []);
 
+<<<<<<< HEAD
   const handdleDeleteProduct = (id) => {
     dispatch(deleteProduct(id));
     console.log(id);
+=======
+  const deleteProduct = (id) => {
+    axios.delete(`http://localhost:3001/products/${id}`).then((response) => {
+      alert('Are you sure you want to delete');
+      setListOfProducts(listOfProducts.filter((product) => product.id !== id));
+    });
+>>>>>>> parent of 1606f48 (installed redux-saga and fetched products)
   };
-
-  // useEffect(() => {
-  //   axios.get('http://localhost:3001/products').then((response) => {
-  //     setListOfProducts(response.data);
-  //   });
-  // }, []);
-
-  // const deleteProduct = (id) => {
-  //   axios.delete(`http://localhost:3001/products/${id}`).then((response) => {
-  //     alert('Are you sure you want to delete');
-  //     setListOfProducts(listOfProducts.filter((product) => product.id !== id));
-  //   });
-  // };
 
   return (
     <React.Fragment>
@@ -64,7 +62,7 @@ export default function Orders() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {products.map((product) => (
+          {listOfProducts.map((product) => (
             <TableRow key={product.id}>
               <TableCell>{product.id}</TableCell>
               <TableCell>{product.name}</TableCell>
