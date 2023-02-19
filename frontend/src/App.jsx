@@ -12,7 +12,7 @@ import Login from './pages/Login';
 // import { selectIsLoggedIn } from './redux/features/auth/authSlice';
 // import { useSelector } from 'react-redux';
 
-// axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true;
 
 function App() {
   // const isLoggedId = useSelector(selectIsLoggedIn);

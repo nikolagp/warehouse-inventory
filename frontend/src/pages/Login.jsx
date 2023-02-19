@@ -39,7 +39,8 @@ export default function Login() {
           alert(response.data.error);
         } else {
           localStorage.setItem('accessToken', response.data.accessToken);
-          setName(response.data.name);
+          localStorage.setItem('name', response.data.name);
+          // setName(response.data.name);
         }
       });
       // await dispatch(SET_LOGIN(true));

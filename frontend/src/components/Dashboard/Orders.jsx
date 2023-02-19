@@ -15,36 +15,38 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   getProductsFetch,
   deleteProduct,
-} from '../../redux/features/auth/authSlice';
+} from '../../redux/features/auth/appState';
 
 export default function Orders() {
-  const [listOfProducts, setListOfProducts] = useState([]);
-
-  // useEffect(() => {
-  //   dispatch(getProductsFetch());
-  // }, [dispatch]);
-
-  // const handdleDeleteProduct = (id) => {
-  //   dispatch(deleteProduct(id));
-  //   console.log(id);
-
-  // const deleteProduct = (id) => {
-  //   dispatch(deleteProductSuccess(id));
-  //   console.log(id);
-  // };
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.app.products);
+  // const [listOfProducts, setListOfProducts] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3001/products').then((response) => {
-      setListOfProducts(response.data);
-    });
-  }, []);
+    dispatch(getProductsFetch());
+  }, [dispatch]);
 
   const handdleDeleteProduct = (id) => {
-    axios.delete(`http://localhost:3001/products/${id}`).then((response) => {
-      alert('Are you sure you want to delete');
-      setListOfProducts(listOfProducts.filter((product) => product.id !== id));
-    });
+    dispatch(deleteProduct(id));
+    console.log(id);
   };
+
+  // const deleteProduct = (id) => {
+  //   dispatch(deleteProduct(id));
+  // };
+
+  // useEffect(() => {
+  //   axios.get('http://localhost:3001/products').then((response) => {
+  //     setListOfProducts(response.data);
+  //   });
+  // }, []);
+
+  // const handdleDeleteProduct = (id) => {
+  //   axios.delete(`http://localhost:3001/products/${id}`).then((response) => {
+  //     alert('Are you sure you want to delete');
+  //     setListOfProducts(listOfProducts.filter((product) => product.id !== id));
+  //   });
+  // };
 
   return (
     <React.Fragment>
@@ -66,7 +68,7 @@ export default function Orders() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {listOfProducts.map((product) => (
+          {products.map((product) => (
             <TableRow key={product.id}>
               <TableCell>{product.id}</TableCell>
               <TableCell>{product.name}</TableCell>
