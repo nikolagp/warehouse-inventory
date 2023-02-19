@@ -71,7 +71,7 @@ const Drawer = styled(MuiDrawer, {
 const mdTheme = createTheme();
 
 function Sidebar(props) {
-  const name = 'Nikola';
+  const name = 'Nikuc';
   // const name = useSelector(selectName);
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
