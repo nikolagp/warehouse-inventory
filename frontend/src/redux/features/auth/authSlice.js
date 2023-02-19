@@ -28,6 +28,9 @@ const authSlice = createSlice({
       state.products = action.payload;
       state.isLoading = false;
     },
+    addProducts(state, action) {
+      state.products = action.payload;
+    },
     deleteProduct(state, action) {
       state.products = state.products.filter(
         (product) => product.id !== action.payload
@@ -50,6 +53,7 @@ export const {
   deleteProduct,
   registerUsers,
   loginUsers,
+  addProducts,
 } = authSlice.actions;
 
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
