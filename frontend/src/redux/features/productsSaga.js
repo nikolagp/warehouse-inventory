@@ -42,11 +42,12 @@ function* workRegisterUsers(action) {
 
 function* workLoginUsers(action) {
   const formData = action.payload;
-  const data = { username: formData.username, password: formData.password };
-  const user = axios.post('http://localhost:3001/auth/login', data);
-
-  const newUser = yield users.data;
-  yield put(loginUsers(newUser));
+  const { username, password } = formData;
+  const data = { username: username, password: password };
+  const response = yield axios.post('http://localhost:3001/auth/login', data);
+  localStorage.setItem('accessToken', response.data.accessToken);
+  const logUser = response.data;
+  yield put(loginUsers(logUser));
 }
 
 // function* workDeleteProduct({ payload: id }) {
@@ -63,7 +64,7 @@ function* productsSaga() {
   yield takeEvery('auth/getProductsFetch', workGetProductsFetch);
   yield takeEvery('auth/deleteProduct', workDeleteProduct);
   yield takeEvery('auth/registerUsers', workRegisterUsers);
-  yield takeEvery('auth/loginUsers', workLoginUsers);
+  yield takeEvery('auth/registerUsers', workLoginUsers);
 }
 
 export default productsSaga;
