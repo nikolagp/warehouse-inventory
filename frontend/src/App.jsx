@@ -12,10 +12,10 @@ import Login from './pages/Login';
 import { selectIsLoggedIn } from './redux/features/auth/authSlice';
 import { useSelector } from 'react-redux';
 
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 function App() {
-  const isLoggedId = useSelector(selectIsLoggedIn);
+  // const isLoggedId = useSelector(selectIsLoggedIn);
 
   return (
     <div className="App">
@@ -25,7 +25,8 @@ function App() {
             <> */}
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
-          {/* <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          {/* 
             </>
           ) : (
             <> */}

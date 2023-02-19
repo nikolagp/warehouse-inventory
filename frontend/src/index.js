@@ -1,12 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-<<<<<<< HEAD
-// import { store } from './redux/store';
-=======
 
 import { store } from './redux/store';
->>>>>>> parent of 1606f48 (installed redux-saga and fetched products)
 import { Provider } from 'react-redux';
 // import createSagaMiddleware from '@redux-saga/core';
 import createSagaMiddleware from '@redux-saga/core';
@@ -15,13 +11,13 @@ import authReducer from './redux/features/auth/authSlice';
 import productsSaga from './redux/features/productsSaga';
 
 const saga = createSagaMiddleware();
-const store = configureStore({
-  reducer: {
-    auth: authReducer,
-  },
-  middleware: [saga],
-});
-saga.run(productsSaga);
+// const store = configureStore({
+//   reducer: {
+//     auth: authReducer,
+//   },
+//   middleware: [saga],
+// });
+// saga.run(productsSaga);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
