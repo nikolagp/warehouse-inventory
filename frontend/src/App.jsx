@@ -21,40 +21,40 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          {!isLoggedId ? (
-            <>
-              <Route path="/" element={<Home />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/login" element={<Login />} />
+          {/* {!isLoggedId ? (
+            <> */}
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          {/* <Route path="/login" element={<Login />} />
             </>
           ) : (
-            <>
-              <Route
-                path="/dashboard"
-                element={
-                  <Sidebar>
-                    <UserDashboard />
-                  </Sidebar>
-                }
-              />
-              <Route
-                path="/addproduct"
-                element={
-                  <Sidebar>
-                    <AddProduct />
-                  </Sidebar>
-                }
-              />
-              <Route
-                path="/product/:id"
-                element={
-                  <Sidebar>
-                    <Product />
-                  </Sidebar>
-                }
-              />
-            </>
-          )}
+            <> */}
+          <Route
+            path="/dashboard"
+            element={
+              <Sidebar>
+                <UserDashboard />
+              </Sidebar>
+            }
+          />
+          <Route
+            path="/addproduct"
+            element={
+              <Sidebar>
+                <AddProduct />
+              </Sidebar>
+            }
+          />
+          <Route
+            path="/product/:id"
+            element={
+              <Sidebar>
+                <Product />
+              </Sidebar>
+            }
+          />
+          {/* </>
+          )} */}
           <Route path="/*" element={<Home to="/" />} />
         </Routes>
       </BrowserRouter>

@@ -57,7 +57,8 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.get('/auth', validateToken, (req, res) => {
+// router.get('/auth', validateToken, (req, res) => {
+router.get('/jwt', validateToken, (req, res) => {
   res.json(req.user);
 });
 

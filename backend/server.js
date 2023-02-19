@@ -15,7 +15,7 @@ app.use(
     credentials: true,
   })
 );
-app.use(cookieParser());
+// app.use(cookieParser());
 
 const db = require('./models');
 
@@ -25,7 +25,8 @@ app.use('/products', productRouter);
 
 const usersRouter = require('./routes/usersRoute');
 
-app.use('/auth', validateToken, usersRouter);
+// app.use('/auth', validateToken, usersRouter);
+app.use('/auth', usersRouter);
 
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {
