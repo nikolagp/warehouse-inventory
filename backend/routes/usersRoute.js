@@ -45,6 +45,9 @@ router.post('/login', async (req, res) => {
         { username: user.username, id: user.id },
         'importantsecret'
       );
+      res.cookie('accessToken', accessToken, {
+        httpOnly: true,
+      });
       // res.status(200).json({ accessToken: accessToken });
       res.json({ accessToken: accessToken, name: user.username, id: user.id });
       return;
@@ -54,7 +57,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.get('/jwt', validateToken, (req, res) => {
+router.get('/auth', validateToken, (req, res) => {
   res.json(req.user);
 });
 

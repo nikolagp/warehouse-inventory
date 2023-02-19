@@ -9,41 +9,52 @@ import Product from './pages/Product';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import Login from './pages/Login';
+import { selectIsLoggedIn } from './redux/features/auth/authSlice';
+import { useSelector } from 'react-redux';
 
 axios.defaults.withCredentials = true;
 
 function App() {
+  const isLoggedId = useSelector(selectIsLoggedIn);
+
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/dashboard"
-            element={
-              <Sidebar>
-                <UserDashboard />
-              </Sidebar>
-            }
-          />
-          <Route
-            path="/addproduct"
-            element={
-              <Sidebar>
-                <AddProduct />
-              </Sidebar>
-            }
-          />
-          <Route
-            path="/product/:id"
-            element={
-              <Sidebar>
-                <Product />
-              </Sidebar>
-            }
-          />
+          {!isLoggedId ? (
+            <>
+              <Route path="/" element={<Home />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+            </>
+          ) : (
+            <>
+              <Route
+                path="/dashboard"
+                element={
+                  <Sidebar>
+                    <UserDashboard />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/addproduct"
+                element={
+                  <Sidebar>
+                    <AddProduct />
+                  </Sidebar>
+                }
+              />
+              <Route
+                path="/product/:id"
+                element={
+                  <Sidebar>
+                    <Product />
+                  </Sidebar>
+                }
+              />
+            </>
+          )}
           <Route path="/*" element={<Home to="/" />} />
         </Routes>
       </BrowserRouter>
