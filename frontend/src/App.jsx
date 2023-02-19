@@ -9,8 +9,8 @@ import Product from './pages/Product';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import Login from './pages/Login';
-import { selectIsLoggedIn } from './redux/features/auth/authSlice';
-import { useSelector } from 'react-redux';
+// import { selectIsLoggedIn } from './redux/features/auth/authSlice';
+// import { useSelector } from 'react-redux';
 
 // axios.defaults.withCredentials = true;
 
