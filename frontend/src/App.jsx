@@ -21,15 +21,9 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          {/* {!isLoggedId ? (
-            <> */}
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          {/* 
-            </>
-          ) : (
-            <> */}
           <Route
             path="/dashboard"
             element={
@@ -54,8 +48,6 @@ function App() {
               </Sidebar>
             }
           />
-          {/* </>
-          )} */}
           <Route path="/*" element={<Home to="/" />} />
         </Routes>
       </BrowserRouter>

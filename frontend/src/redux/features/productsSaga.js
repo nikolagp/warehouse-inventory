@@ -1,27 +1,27 @@
-import axios from 'axios';
-import { call, put, takeEvery } from 'redux-saga/effects';
-import { getProductsSuccess, addProducts } from './auth/authSlice';
+// import axios from 'axios';
+// import { call, put, takeEvery } from 'redux-saga/effects';
+// import { getProductsSuccess, addProducts } from './auth/authSlice';
 
-function* workGetProductsFetch() {
-  const products = yield call(() => fetch('http://localhost:3001/products'));
-  const formattedProducts = yield products.json();
-  yield put(getProductsSuccess(formattedProducts));
-}
+// function* workGetProductsFetch() {
+//   const products = yield call(() => fetch('http://localhost:3001/products'));
+//   const formattedProducts = yield products.json();
+//   yield put(getProductsSuccess(formattedProducts));
+// }
 
-function* workAddProducts(action) {
-  const formData = action.payload;
-  const products = yield call(() =>
-    axios.post('http://localhost:3001/products', formData)
-  );
-  yield put(addProducts(products));
-}
+// function* workAddProducts(action) {
+//   const formData = action.payload;
+//   const products = yield call(() =>
+//     axios.post('http://localhost:3001/products', formData)
+//   );
+//   yield put(addProducts(products));
+// }
 
-function* productsSaga() {
-  yield takeEvery('auth/getProductsFetch', workGetProductsFetch);
-  yield takeEvery('auth/addProducts', workAddProducts);
-}
+// function* productsSaga() {
+//   yield takeEvery('auth/getProductsFetch', workGetProductsFetch);
+//   yield takeEvery('auth/addProducts', workAddProducts);
+// }
 
-export default productsSaga;
+// export default productsSaga;
 
 // import { call, put, takeEvery } from 'redux-saga/effects';
 // import {

@@ -12,12 +12,12 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import {
-  SET_LOGIN,
-  SET_NAME,
-  registerUsers,
-} from '../redux/features/auth/authSlice';
-import { useDispatch } from 'react-redux';
+// import {
+//   SET_LOGIN,
+//   SET_NAME,
+//   registerUsers,
+// } from '../redux/features/auth/authSlice';
+// import { useDispatch } from 'react-redux';
 
 const theme = createTheme();
 export default function Register() {
@@ -28,8 +28,6 @@ export default function Register() {
   const [formData, setFormData] = useState(initialValues);
   const { username, password } = formData;
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [name, setName] = useState('');
 
   const handleChange = (e) => {
     setFormData({
@@ -40,20 +38,18 @@ export default function Register() {
 
   const register = async (e) => {
     e.preventDefault();
-    await dispatch(registerUsers(formData));
-    // await axios
-    //   .post('http://localhost:3001/auth', formData)
+    // await dispatch(registerUsers(formData));
+    await axios.post('http://localhost:3001/auth', formData);
     //   .then((response) => {
     //     if (response.data.error) {
     //       alert(response.data.error);
     //       navigate('/');
     //     } else {
     //       setName(username);
-    //
     //     }
     //   });
-    await dispatch(SET_LOGIN(true));
-    await dispatch(SET_NAME(username));
+    // await dispatch(SET_LOGIN(true));
+    // await dispatch(SET_NAME(username));
     navigate('/dashboard');
     console.log(username, formData);
   };

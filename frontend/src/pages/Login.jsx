@@ -11,8 +11,8 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { SET_LOGIN, SET_NAME } from '../redux/features/auth/authSlice';
-import { useDispatch } from 'react-redux';
+// import { SET_LOGIN, SET_NAME } from '../redux/features/auth/authSlice';
+// import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
@@ -26,7 +26,7 @@ export default function Login() {
   const [formData, setFormData] = useState(initialValues);
   const { username, password } = formData;
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [name, setName] = useState('');
 
   const login = async (e) => {
@@ -42,8 +42,8 @@ export default function Login() {
           setName(response.data.name);
         }
       });
-      await dispatch(SET_LOGIN(true));
-      await dispatch(SET_NAME(username));
+      // await dispatch(SET_LOGIN(true));
+      // await dispatch(SET_NAME(username));
       navigate('/dashboard');
     } catch (error) {
       console.error(error);
