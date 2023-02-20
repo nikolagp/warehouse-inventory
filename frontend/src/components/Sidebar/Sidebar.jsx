@@ -19,7 +19,7 @@ import ListItemText from '@mui/material/ListItemText';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setLogin, selectName } from '../../redux/features/auth/appState';
 
 const drawerWidth = 240;
@@ -71,6 +71,7 @@ const Drawer = styled(MuiDrawer, {
 const mdTheme = createTheme();
 
 function Sidebar(props) {
+  const dispatch = useDispatch();
   const name = useSelector((state) => state.app.name);
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -81,7 +82,7 @@ function Sidebar(props) {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('name');
     localStorage.removeItem('id');
-    setLogin(false);
+    dispatch(setLogin(false));
   }
 
   return (

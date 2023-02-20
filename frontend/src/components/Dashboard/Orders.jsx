@@ -14,7 +14,7 @@ import { Tooltip } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getProductsFetch,
-  deleteProduct,
+  deleteProductStart,
 } from '../../redux/features/auth/appState';
 
 export default function Orders() {
@@ -24,10 +24,13 @@ export default function Orders() {
 
   useEffect(() => {
     dispatch(getProductsFetch());
-  }, [dispatch]);
+  }, []);
 
   const handdleDeleteProduct = (id) => {
-    dispatch(deleteProduct(id));
+    if (window.confirm('Are you sure you want to delete')) {
+      dispatch(deleteProductStart(id));
+    }
+
     console.log(id);
   };
 

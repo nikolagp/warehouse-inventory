@@ -7,16 +7,15 @@ import Sidebar from './components/Sidebar/Sidebar';
 import AddProduct from './pages/AddProduct';
 import Product from './pages/Product';
 import axios from 'axios';
-import 'react-toastify/dist/ReactToastify.css';
 import Login from './pages/Login';
 // import { selectIsLoggedIn } from './redux/features/auth/authSlice';
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 axios.defaults.withCredentials = true;
 
 function App() {
   // const isLoggedId = useSelector(selectIsLoggedIn);
-
+  const isLoggedIn = useSelector((state) => state.app.isLoggedIn);
   return (
     <div className="App">
       <BrowserRouter>

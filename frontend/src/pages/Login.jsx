@@ -12,8 +12,14 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import { SET_LOGIN, SET_NAME } from '../redux/features/auth/authSlice';
-// import { useDispatch } from 'react-redux';
+import {
+  setLogin,
+  setName,
+  registerUsers,
+  loginUserStart,
+} from '../redux/features/auth/appState';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 const theme = createTheme();
 
@@ -26,30 +32,40 @@ export default function Login() {
   const [formData, setFormData] = useState(initialValues);
   const { username, password } = formData;
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
-  const [name, setName] = useState('');
+  const dispatch = useDispatch();
+  // const [name, setName] = useState('');
 
-  const login = async (e) => {
+  const login = (e) => {
     e.preventDefault();
-
-    try {
-      const data = { username: username, password: password };
-      axios.post('http://localhost:3001/auth/login', data).then((response) => {
-        if (response.data.error) {
-          alert(response.data.error);
-        } else {
-          localStorage.setItem('accessToken', response.data.accessToken);
-          localStorage.setItem('name', response.data.name);
-          // setName(response.data.name);
-        }
-      });
-      // await dispatch(SET_LOGIN(true));
-      // await dispatch(SET_NAME(username));
-      navigate('/dashboard');
-    } catch (error) {
-      console.error(error);
-    }
+    const formData = { username: username, password: password };
+    dispatch(loginUserStart(formData));
+    dispatch(setLogin(true));
+    navigate('/dashboard');
+    dispatch(setName(username));
+    // console.log(formData.username);
   };
+
+  // const login = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     const data = { username: username, password: password };
+  //     axios.post('http://localhost:3001/auth/login', data).then((response) => {
+  //       if (response.data.error) {
+  //         alert(response.data.error);
+  //       } else {
+  //         localStorage.setItem('accessToken', response.data.accessToken);
+  //         localStorage.setItem('name', response.data.name);
+  //         // setName(response.data.name);
+  //       }
+  //     });
+  //     // await dispatch(SET_LOGIN(true));
+  //     // await dispatch(SET_NAME(username));
+  //     navigate('/dashboard');
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const handleChange = (e) => {
     setFormData({

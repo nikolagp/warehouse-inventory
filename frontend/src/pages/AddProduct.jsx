@@ -3,9 +3,11 @@ import { Button, TextField, Box } from '@mui/material';
 import axios from 'axios';
 import Title from '../components/Dashboard/Title';
 import { useNavigate } from 'react-router-dom';
+// import { useSelector } from 'react-redux';
 
 const Form = () => {
   let navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: '',
     category: '',

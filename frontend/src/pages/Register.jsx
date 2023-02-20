@@ -16,15 +16,16 @@ import {
   setLogin,
   setName,
   registerUsers,
+  createUserStart,
 } from '../redux/features/auth/appState';
 import { useDispatch } from 'react-redux';
 
 const theme = createTheme();
+const initialValues = {
+  username: '',
+  password: '',
+};
 export default function Register() {
-  const initialValues = {
-    username: '',
-    password: '',
-  };
   const [formData, setFormData] = useState(initialValues);
   const { username, password } = formData;
   const navigate = useNavigate();
@@ -37,23 +38,29 @@ export default function Register() {
     });
   };
 
-  const register = async (e) => {
+  const register = (e) => {
     e.preventDefault();
-    await dispatch(registerUsers(formData));
-    // await axios.post('http://localhost:3001/auth', formData);
-    //   .then((response) => {
-    //     if (response.data.error) {
-    //       alert(response.data.error);
-    //       navigate('/');
-    //     } else {
-    //       setName(username);
-    //     }
-    //   });
-    // await dispatch(SET_LOGIN(true));
-    await dispatch(setName(username));
+    dispatch(createUserStart(formData));
     navigate('/dashboard');
-    console.log(username, formData);
   };
+
+  // const register = async (e) => {
+  //   e.preventDefault();
+  //   await dispatch(registerUsers(formData));
+  //   // await axios.post('http://localhost:3001/auth', formData);
+  //   //   .then((response) => {
+  //   //     if (response.data.error) {
+  //   //       alert(response.data.error);
+  //   //       navigate('/');
+  //   //     } else {
+  //   //       setName(username);
+  //   //     }
+  //   //   });
+  //   // await dispatch(SET_LOGIN(true));
+  //   await dispatch(setName(username));
+  //   navigate('/dashboard');
+  //   console.log(username, formData);
+  // };
 
   return (
     <ThemeProvider theme={theme}>
