@@ -26,26 +26,41 @@ function* workDeleteProduct(id) {
 
 function* workRegisterUsers(action) {
   const formData = action.payload;
-  const users = yield call(() =>
-    // axios.post('http://localhost:3001/auth', formData)
+  const response = yield call(() =>
     fetch('http://localhost:3001/auth', {
       method: 'POST',
       body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.error) {
-          alert(data.error);
-          useNavigate('/');
-        } else {
-          setName('Kole');
-        }
-      })
+    }).then((response) => response.json())
   );
-  const newUser = yield users.data;
-  yield put(registerUsers(newUser));
-  // yield put(setName(users.data.name));
+  if (response.error) {
+    alert(response.error);
+    // yield call(useNavigate('/'));
+  } else {
+    yield put(registerUsers(response));
+  }
 }
+
+// function* workRegisterUsers(action) {
+//   const formData = action.payload;
+//   const users = yield call(() =>
+//     fetch('http://localhost:3001/auth', {
+//       method: 'POST',
+//       body: formData,
+//     })
+//       .then((response) => response.json())
+//       .then((data) => {
+//         if (data.error) {
+//           alert(data.error);
+//           useNavigate('/');
+//         } else {
+//           setName('Kole');
+//         }
+//       })
+//   );
+//   const newUser = yield users.data;
+//   yield put(registerUsers(newUser));
+//   // yield put(setName(users.data.name));
+// }
 
 function* appSaga() {
   yield takeEvery('app/getProductsFetch', workGetProductsFetch);
