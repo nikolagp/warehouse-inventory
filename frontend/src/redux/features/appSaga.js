@@ -12,6 +12,7 @@ import {
   takeLatest,
 } from 'redux-saga/effects';
 import {
+  setToken,
   getProductsFetch,
   getProductsSuccess,
   getProductsError,
@@ -26,6 +27,9 @@ import {
   loginUserError,
   setLogin,
   setName,
+  addProductStart,
+  addProductSuccess,
+  addProductError,
 } from './auth/appState';
 // import { registerUserApi, loadProductsApi } from '../api';
 
@@ -60,6 +64,21 @@ function* workDeleteProductStart(productID) {
   }
 }
 
+// Add Product
+
+function* workAddProductStart({ payload }) {
+  try {
+    const products = yield call(() =>
+      axios.post('http://localhost:3001/products/', payload)
+    );
+    if (products.status === 200) {
+      yield put(addProductSuccess(products.data));
+    }
+  } catch (error) {
+    yield put(addProductError(error.products.data));
+  }
+}
+
 // Register user
 
 function* workCreateUserStart({ payload }) {
@@ -84,7 +103,7 @@ function* workLoginUserStart({ data }) {
     if (response.status === 200) {
       yield put(loginUserSuccess(response.data));
       // yield put(setLogin(true));
-      // yield put(setName(data.username));
+      // yield put(setToken(response.data.accessToken));
     }
   } catch (error) {
     yield put(loginUserError(error.response.data));
@@ -94,6 +113,7 @@ function* workLoginUserStart({ data }) {
 function* appSaga() {
   yield takeEvery('app/getProductsFetch', workGetProductsFetch);
   yield takeLatest('app/createUserStart', workCreateUserStart);
+  yield takeLatest('app/addProductStart', workAddProductStart);
   yield takeLatest('app/loginUserStart', workLoginUserStart);
   // yield take('app/deleteProductStart', workDeleteProductStart);
   while (true) {

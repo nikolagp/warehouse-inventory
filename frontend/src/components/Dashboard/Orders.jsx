@@ -20,6 +20,8 @@ import {
 export default function Orders() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.app.products);
+  const isLoading = useSelector((state) => state.app.isLoading);
+  const error = useSelector((state) => state.app.error);
   // const [listOfProducts, setListOfProducts] = useState([]);
 
   useEffect(() => {
@@ -30,7 +32,6 @@ export default function Orders() {
     if (window.confirm('Are you sure you want to delete')) {
       dispatch(deleteProductStart(id));
     }
-
     console.log(id);
   };
 
@@ -53,7 +54,9 @@ export default function Orders() {
 
   return (
     <React.Fragment>
-      <Title>Recent Orders</Title>
+      {!isLoading && <Title>Recent Orders</Title>}
+      {isLoading && <Title>Loading...</Title>}
+      {!isLoading && error ? <Title>Error: {error}</Title> : null}
       <Table size="small">
         <TableHead>
           <TableRow sx={{ backgroundColor: '#f0f0f0', fontWeight: 'bold' }}>
@@ -71,32 +74,34 @@ export default function Orders() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {products.map((product) => (
-            <TableRow key={product.id}>
-              <TableCell>{product.id}</TableCell>
-              <TableCell>{product.name}</TableCell>
-              <TableCell>{product.category}</TableCell>
-              <TableCell>{product.price}</TableCell>
-              <TableCell>{product.quantity}</TableCell>
-              <TableCell align="center">
-                <Link to={`/product/${product.id}`}>
-                  <Tooltip title="Preview product">
-                    <RemoveRedEyeOutlinedIcon cursor="pointer" />
-                  </Tooltip>
-                </Link>
-              </TableCell>
-              <TableCell align="center">
-                <Tooltip title="Delete product">
-                  <DeleteForeverOutlinedIcon
-                    cursor="pointer"
-                    onClick={() => {
-                      handdleDeleteProduct(product.id);
-                    }}
-                  />
-                </Tooltip>
-              </TableCell>
-            </TableRow>
-          ))}
+          {!isLoading && products.length
+            ? products.map((product) => (
+                <TableRow key={product.id}>
+                  <TableCell>{product.id}</TableCell>
+                  <TableCell>{product.name}</TableCell>
+                  <TableCell>{product.category}</TableCell>
+                  <TableCell>{product.price}</TableCell>
+                  <TableCell>{product.quantity}</TableCell>
+                  <TableCell align="center">
+                    <Link to={`/product/${product.id}`}>
+                      <Tooltip title="Preview product">
+                        <RemoveRedEyeOutlinedIcon cursor="pointer" />
+                      </Tooltip>
+                    </Link>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Tooltip title="Delete product">
+                      <DeleteForeverOutlinedIcon
+                        cursor="pointer"
+                        onClick={() => {
+                          handdleDeleteProduct(product.id);
+                        }}
+                      />
+                    </Tooltip>
+                  </TableCell>
+                </TableRow>
+              ))
+            : null}
         </TableBody>
       </Table>
     </React.Fragment>

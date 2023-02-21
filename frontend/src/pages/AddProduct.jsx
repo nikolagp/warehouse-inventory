@@ -3,10 +3,13 @@ import { Button, TextField, Box } from '@mui/material';
 import axios from 'axios';
 import Title from '../components/Dashboard/Title';
 import { useNavigate } from 'react-router-dom';
+import { addProductStart } from '../redux/features/auth/appState';
+import { useDispatch } from 'react-redux';
 // import { useSelector } from 'react-redux';
 
 const Form = () => {
   let navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -19,19 +22,24 @@ const Form = () => {
     quantity: '',
   });
 
-  const handleSubmit = async (formData) => {
-    console.log(formData);
-    try {
-      const response = await axios.post(
-        'http://localhost:3001/products',
-        formData
-      );
-      navigate('/dashboard', { replace: true });
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-    }
+  const handleSubmit = (formData) => {
+    dispatch(addProductStart(formData));
+    navigate('/dashboard');
   };
+
+  // const handleSubmit = async (formData) => {
+  //   console.log(formData);
+  //   try {
+  //     const response = await axios.post(
+  //       'http://localhost:3001/products',
+  //       formData
+  //     );
+  //     navigate('/dashboard', { replace: true });
+  //     console.log(response);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const handleChange = (e) => {
     setFormData({
