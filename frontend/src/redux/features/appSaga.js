@@ -30,8 +30,37 @@ import {
   addProductStart,
   addProductSuccess,
   addProductError,
+  loginStatusStart,
+  loginStatusSuccess,
+  loginStatusError,
 } from './auth/appState';
-// import { registerUserApi, loadProductsApi } from '../api';
+
+// Login Status
+function* workloginStatusStart() {
+  try {
+    const response = yield call(() =>
+      axios.get('http://localhost:3001/auth/auth', {
+        headers: {
+          accessToken: localStorage.getItem('accessToken'),
+        },
+      })
+    );
+    if (response.data.error) {
+      yield put(setLogin(false));
+    } else {
+      yield put(loginStatusSuccess(response.data));
+      yield put(setLogin(true));
+      yield put(setName(response.data.name));
+      // setAuthState({
+      //   username: response.data.username,
+      //   id: response.data.id,
+      //   status: true,
+      // });
+    }
+  } catch (error) {
+    yield put(loginStatusError(error.response.data));
+  }
+}
 
 // Fetch products
 
@@ -83,27 +112,35 @@ function* workAddProductStart({ payload }) {
 
 function* workCreateUserStart({ payload }) {
   try {
-    const products = yield call(() =>
+    const response = yield call(() =>
       axios.post('http://localhost:3001/auth/', payload)
     );
-    if (products.status === 200) {
-      yield put(createUserSuccess(products.data));
+    yield put(createUserSuccess(response.data));
+    if (response.data.error) {
+      alert(response.data.error);
+      yield put(setLogin(false));
+    } else {
+      yield put(setLogin(true));
     }
   } catch (error) {
-    yield put(createUserError(error.products.data));
+    yield put(createUserError(error.response.data));
   }
 }
 
 // Login user
-function* workLoginUserStart({ data }) {
+function* workLoginUserStart({ payload }) {
   try {
     const response = yield call(() =>
-      axios.post('http://localhost:3001/auth/login/', data)
+      axios.post('http://localhost:3001/auth/login/', payload)
     );
-    if (response.status === 200) {
-      yield put(loginUserSuccess(response.data));
-      // yield put(setLogin(true));
-      // yield put(setToken(response.data.accessToken));
+    // localStorage.setItem('accessToken', response.data.accessToken);
+    yield put(loginUserSuccess(response.data));
+    if (response.data.error) {
+      alert(response.data.error);
+    } else {
+      localStorage.setItem('accessToken', response.data.accessToken);
+      localStorage.setItem('name', response.data.name);
+      yield put(setLogin(true));
     }
   } catch (error) {
     yield put(loginUserError(error.response.data));
@@ -112,6 +149,7 @@ function* workLoginUserStart({ data }) {
 
 function* appSaga() {
   yield takeEvery('app/getProductsFetch', workGetProductsFetch);
+  yield takeEvery('app/loginStatusStart', workloginStatusStart);
   yield takeLatest('app/createUserStart', workCreateUserStart);
   yield takeLatest('app/addProductStart', workAddProductStart);
   yield takeLatest('app/loginUserStart', workLoginUserStart);

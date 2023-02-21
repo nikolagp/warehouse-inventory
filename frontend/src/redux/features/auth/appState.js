@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const name = JSON.parse(localStorage.getItem('name'));
+// const name = JSON.parse(localStorage.getItem('name'));
 const accessToken = localStorage.getItem('access_token');
 
 const initialState = {
   isLoggedIn: false,
-  name: name ? name : '',
+  name: '',
   accessToken: accessToken ? accessToken : '',
   isLoading: false,
   products: [],
@@ -27,16 +27,32 @@ const appSlice = createSlice({
     setToken(state, action) {
       state.token = action.payload;
     },
+    // Login Status
+    // Fetch products
+    loginStatusStart(state) {
+      state.isLoading = true;
+    },
+    loginStatusSuccess(state, action) {
+      // state.products = action.payload;
+      state.isLoading = false;
+      state.isLoggedIn = true;
+    },
+    loginStatusError(state, action) {
+      state.isLoading = false;
+      state.isLoggedIn = false;
+      state.error = action.payload;
+    },
     // Register user
     createUserStart(state) {
       state.isLoading = true;
     },
     createUserSuccess(state, action) {
       state.isLoading = false;
+      state.isLoggedIn = true;
       state.users = action.payload;
     },
     createUserError(state, action) {
-      state.isLoading = false;
+      state.isLoggedIn = false;
       state.error = action.payload;
     },
     // Add new product
@@ -125,6 +141,9 @@ export const {
   addProductStart,
   addProductSuccess,
   addProductError,
+  loginStatusStart,
+  loginStatusSuccess,
+  loginStatusError,
 } = appSlice.actions;
 
 export const selectIsLoggedIn = (state) => state.app.isLoggedIn;

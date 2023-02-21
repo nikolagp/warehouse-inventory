@@ -17,6 +17,7 @@ import {
   setName,
   registerUsers,
   createUserStart,
+  selectIsLoggedIn,
 } from '../redux/features/auth/appState';
 import { useDispatch } from 'react-redux';
 
@@ -41,7 +42,12 @@ export default function Register() {
   const register = (e) => {
     e.preventDefault();
     dispatch(createUserStart(formData));
+    dispatch(setName(username));
     navigate('/dashboard');
+    // if (selectIsLoggedIn) {
+    // } else {
+    //   console.log('Register failed');
+    // }
   };
 
   // const register = async (e) => {

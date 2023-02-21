@@ -22,6 +22,7 @@ router.post('/', async (req, res) => {
         password: hash,
       });
       res.json('SUCCESS');
+      return;
     });
   } catch (err) {
     console.error(err);
@@ -39,19 +40,30 @@ router.post('/login', async (req, res) => {
     }
 
     bcrypt.compare(password, user.password).then((match) => {
-      if (!match)
+      if (!match) {
         res.json({ error: 'Wrong Username And Password Combination' });
-      const accessToken = sign(
-        { username: user.username, id: user.id },
-        'importantsecret'
-      );
-      // res.status(200).json({ accessToken: accessToken });
-      res.json({ accessToken: accessToken, name: user.username, id: user.id });
-      return;
+        return;
+      } else {
+        const accessToken = sign(
+          { username: user.username, id: user.id },
+          'importantsecret'
+        );
+        // res.status(200).json({ accessToken: accessToken });
+        res.json({
+          accessToken: accessToken,
+          name: user.username,
+          id: user.id,
+        });
+        return;
+      }
     });
   } catch (err) {
     console.error(err);
   }
+});
+
+router.get('/auth', validateToken, (req, res) => {
+  res.json(req.user);
 });
 
 // router.get('/auth', validateToken, (req, res) => {

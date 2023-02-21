@@ -39,10 +39,9 @@ export default function Login() {
     e.preventDefault();
     const formData = { username: username, password: password };
     dispatch(loginUserStart(formData));
-    dispatch(setLogin(true));
     navigate('/dashboard');
     dispatch(setName(username));
-    // console.log(formData.username);
+    console.log(formData.username);
   };
 
   // const login = async (e) => {
@@ -65,6 +64,25 @@ export default function Login() {
   //   } catch (error) {
   //     console.error(error);
   //   }
+  // };
+
+  // const login = (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const data = { username: username, password: password };
+  //     axios.post('http://localhost:3001/auth/login', data).then((response) => {
+  //       if (response.data.error) {
+  //         alert(response.data.error);
+  //       } else {
+  //         localStorage.setItem('accessToken', response.data.token);
+  //         dispatch(setLogin(true));
+  //         navigate('/dashboard');
+  //       }
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   // return;
   // };
 
   const handleChange = (e) => {
