@@ -24,6 +24,9 @@ const appSlice = createSlice({
       // localStorage.setItem('name', JSON.stringify(action.payload));
       state.name = action.payload;
     },
+    setToken(state, action) {
+      state.token = action.payload;
+    },
     // Register user
     createUserStart(state) {
       state.isLoading = true;
@@ -33,6 +36,18 @@ const appSlice = createSlice({
       state.users = action.payload;
     },
     createUserError(state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    // Add new product
+    addProductStart(state) {
+      state.isLoading = true;
+    },
+    addProductSuccess(state, action) {
+      state.isLoading = false;
+      state.products = action.payload;
+    },
+    addProductError(state, action) {
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -93,11 +108,11 @@ const appSlice = createSlice({
 export const {
   setLogin,
   setName,
+  setToken,
   getProductsFetch,
   getProductsSuccess,
   getProductsError,
-  deleteProduct,
-  registerUsers,
+  // registerUsers,
   createUserStart,
   createUserSuccess,
   createUserError,
@@ -107,6 +122,9 @@ export const {
   loginUserStart,
   loginUserSuccess,
   loginUserError,
+  addProductStart,
+  addProductSuccess,
+  addProductError,
 } = appSlice.actions;
 
 export const selectIsLoggedIn = (state) => state.app.isLoggedIn;
