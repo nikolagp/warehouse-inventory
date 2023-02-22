@@ -1,6 +1,4 @@
 import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import {
   call,
   put,
@@ -12,7 +10,6 @@ import {
   takeLatest,
 } from 'redux-saga/effects';
 import {
-  setToken,
   getProductsFetch,
   getProductsSuccess,
   getProductsError,
@@ -33,6 +30,9 @@ import {
   loginStatusStart,
   loginStatusSuccess,
   loginStatusError,
+  previewProductStart,
+  previewProductSuccess,
+  previewProductError,
 } from './auth/appState';
 
 // Login Status
@@ -50,12 +50,7 @@ function* workloginStatusStart() {
     } else {
       yield put(loginStatusSuccess(response.data));
       yield put(setLogin(true));
-      yield put(setName(response.data.name));
-      // setAuthState({
-      //   username: response.data.username,
-      //   id: response.data.id,
-      //   status: true,
-      // });
+      yield put(setName(response.data.username));
     }
   } catch (error) {
     yield put(loginStatusError(error.response.data));
@@ -93,6 +88,20 @@ function* workDeleteProductStart(productID) {
   }
 }
 
+// Preview products
+function* workPreviewProductStart(id) {
+  try {
+    const products = yield call(() =>
+      axios.get(`http://localhost:3001/products/byId/${id}`)
+    );
+    if (products.status === 200) {
+      yield put(previewProductSuccess(id));
+    }
+  } catch (error) {
+    yield put(previewProductError(error.products.data));
+  }
+}
+
 // Add Product
 
 function* workAddProductStart({ payload }) {
@@ -121,6 +130,7 @@ function* workCreateUserStart({ payload }) {
       yield put(setLogin(false));
     } else {
       yield put(setLogin(true));
+      yield put(setName(payload.username));
     }
   } catch (error) {
     yield put(createUserError(error.response.data));
@@ -133,7 +143,6 @@ function* workLoginUserStart({ payload }) {
     const response = yield call(() =>
       axios.post('http://localhost:3001/auth/login/', payload)
     );
-    // localStorage.setItem('accessToken', response.data.accessToken);
     yield put(loginUserSuccess(response.data));
     if (response.data.error) {
       alert(response.data.error);
@@ -154,9 +163,12 @@ function* appSaga() {
   yield takeLatest('app/addProductStart', workAddProductStart);
   yield takeLatest('app/loginUserStart', workLoginUserStart);
   // yield take('app/deleteProductStart', workDeleteProductStart);
+  // yield takeEvery('app/previewProductStart', workPreviewProductStart);
   while (true) {
     const { payload: productID } = yield take('app/deleteProductStart');
     yield call(workDeleteProductStart, productID);
+    const { payload: id } = yield take('app/previewProductStart');
+    yield call(workPreviewProductStart, id);
   }
 }
 

@@ -10,15 +10,8 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import {
-  setLogin,
-  setName,
-  registerUsers,
-  createUserStart,
-  selectIsLoggedIn,
-} from '../redux/features/auth/appState';
+import { setName, createUserStart } from '../redux/features/auth/appState';
 import { useDispatch } from 'react-redux';
 
 const theme = createTheme();
@@ -44,29 +37,7 @@ export default function Register() {
     dispatch(createUserStart(formData));
     dispatch(setName(username));
     navigate('/dashboard');
-    // if (selectIsLoggedIn) {
-    // } else {
-    //   console.log('Register failed');
-    // }
   };
-
-  // const register = async (e) => {
-  //   e.preventDefault();
-  //   await dispatch(registerUsers(formData));
-  //   // await axios.post('http://localhost:3001/auth', formData);
-  //   //   .then((response) => {
-  //   //     if (response.data.error) {
-  //   //       alert(response.data.error);
-  //   //       navigate('/');
-  //   //     } else {
-  //   //       setName(username);
-  //   //     }
-  //   //   });
-  //   // await dispatch(SET_LOGIN(true));
-  //   await dispatch(setName(username));
-  //   navigate('/dashboard');
-  //   console.log(username, formData);
-  // };
 
   return (
     <ThemeProvider theme={theme}>

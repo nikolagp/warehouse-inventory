@@ -22,7 +22,6 @@ export default function Orders() {
   const products = useSelector((state) => state.app.products);
   const isLoading = useSelector((state) => state.app.isLoading);
   const error = useSelector((state) => state.app.error);
-  // const [listOfProducts, setListOfProducts] = useState([]);
 
   useEffect(() => {
     dispatch(getProductsFetch());
@@ -34,23 +33,6 @@ export default function Orders() {
     }
     console.log(id);
   };
-
-  // const deleteProduct = (id) => {
-  //   dispatch(deleteProduct(id));
-  // };
-
-  // useEffect(() => {
-  //   axios.get('http://localhost:3001/products').then((response) => {
-  //     setListOfProducts(response.data);
-  //   });
-  // }, []);
-
-  // const handdleDeleteProduct = (id) => {
-  //   axios.delete(`http://localhost:3001/products/${id}`).then((response) => {
-  //     alert('Are you sure you want to delete');
-  //     setListOfProducts(listOfProducts.filter((product) => product.id !== id));
-  //   });
-  // };
 
   return (
     <React.Fragment>

@@ -5,7 +5,7 @@ const accessToken = localStorage.getItem('access_token');
 
 const initialState = {
   isLoggedIn: false,
-  name: '',
+  name: null,
   accessToken: accessToken ? accessToken : '',
   isLoading: false,
   products: [],
@@ -21,25 +21,35 @@ const appSlice = createSlice({
       state.isLoggedIn = action.payload;
     },
     setName(state, action) {
-      // localStorage.setItem('name', JSON.stringify(action.payload));
       state.name = action.payload;
     },
     setToken(state, action) {
       state.token = action.payload;
     },
     // Login Status
-    // Fetch products
     loginStatusStart(state) {
       state.isLoading = true;
     },
     loginStatusSuccess(state, action) {
-      // state.products = action.payload;
       state.isLoading = false;
       state.isLoggedIn = true;
+      state.name = action.payload;
     },
     loginStatusError(state, action) {
       state.isLoading = false;
       state.isLoggedIn = false;
+      state.error = action.payload;
+    },
+    // Preview Product
+    previewProductStart(state, action) {
+      state.isLoading = true;
+    },
+    previewProductSuccess(state, action) {
+      state.products = action.payload;
+      state.isLoading = false;
+    },
+    previewProductError(state, action) {
+      state.isLoading = false;
       state.error = action.payload;
     },
     // Register user
@@ -110,14 +120,6 @@ const appSlice = createSlice({
     addProducts(state, action) {
       state.products = action.payload;
     },
-    // deleteProduct(state, action) {
-    //   state.products = state.products.filter(
-    //     (product) => product.id !== action.payload
-    //   );
-    // },
-    // registerUsers(state, action) {
-    //   state.users = action.payload;
-    // },
   },
 });
 
@@ -128,7 +130,6 @@ export const {
   getProductsFetch,
   getProductsSuccess,
   getProductsError,
-  // registerUsers,
   createUserStart,
   createUserSuccess,
   createUserError,
@@ -144,6 +145,9 @@ export const {
   loginStatusStart,
   loginStatusSuccess,
   loginStatusError,
+  previewProductStart,
+  previewProductSuccess,
+  previewProductError,
 } = appSlice.actions;
 
 export const selectIsLoggedIn = (state) => state.app.isLoggedIn;

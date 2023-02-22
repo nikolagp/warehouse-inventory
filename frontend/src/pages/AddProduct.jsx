@@ -27,20 +27,6 @@ const Form = () => {
     navigate('/dashboard');
   };
 
-  // const handleSubmit = async (formData) => {
-  //   console.log(formData);
-  //   try {
-  //     const response = await axios.post(
-  //       'http://localhost:3001/products',
-  //       formData
-  //     );
-  //     navigate('/dashboard', { replace: true });
-  //     console.log(response);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
   const handleChange = (e) => {
     setFormData({
       ...formData,

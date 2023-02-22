@@ -9,18 +9,22 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Grid, Tooltip } from '@mui/material';
 import Item from '@mui/material/ListItem';
-import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { useNavigate } from 'react-router-dom';
+import { previewProductStart } from '.././redux/features/auth/appState';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Product(props) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   let { id } = useParams();
-  const [products, setProducts] = useState({});
+  const products = useSelector((state) => state.app.products);
+  // const [products, setProducts] = useState();
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/products/byId/${id}`).then((response) => {
-      setProducts(response.data);
-    });
+    dispatch(previewProductStart(id));
+    // axios.get(`http://localhost:3001/products/byId/${id}`).then((response) => {
+    //   setProducts(response.data);
+    // });
   }, []);
 
   const deleteProduct = (id) => {
@@ -79,7 +83,6 @@ function Product(props) {
                   Delete
                 </Button>
               </Tooltip>
-              {/* <Button size="small" onClick={}>Delete</Button> */}
             </Item>
           </Grid>
         </Grid>
