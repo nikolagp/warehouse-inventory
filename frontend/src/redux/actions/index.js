@@ -23,3 +23,46 @@ export function registerUser(isLoggedIn) {
     payload: isLoggedIn,
   };
 }
+
+// Login user
+export function loginUser(username, password) {
+  return {
+    type: type.USER_LOGIN_REQUESTED,
+    payload: { username, password },
+  };
+}
+
+export function loginStatus(isLoggedIn) {
+  return {
+    type: type.LOGIN_STATUS_REQUESTED,
+    payload: isLoggedIn,
+  };
+}
+
+export function setLogin(isLoggedIn) {
+  return {
+    type: type.SET_LOGIN,
+    payload: isLoggedIn,
+  };
+}
+
+export function setName(name) {
+  return {
+    type: type.SET_NAME,
+    payload: name,
+  };
+}
+
+// export function loginSuccess(data) {
+//   return {
+//     type: type.USER_LOGIN_SUCCESS,
+//     payload: data,
+//   };
+// }
+
+// export function loginFailed(error) {
+//   return {
+//     type: type.USER_LOGIN_FAILED,
+//     payload: error,
+//   };
+// }

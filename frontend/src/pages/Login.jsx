@@ -20,6 +20,7 @@ import {
 } from '../redux/features/auth/appState';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { loginUser } from '../redux/actions/index';
 
 const theme = createTheme();
 
@@ -37,10 +38,9 @@ export default function Login() {
 
   const login = (e) => {
     e.preventDefault();
-    const formData = { username: username, password: password };
-    dispatch(loginUserStart(formData));
+    dispatch(loginUser(username, password));
     navigate('/dashboard');
-    dispatch(setName(username));
+    // dispatch(setName(username));
   };
 
   const handleChange = (e) => {
