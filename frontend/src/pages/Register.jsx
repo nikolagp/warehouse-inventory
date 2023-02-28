@@ -13,6 +13,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom';
 import { setName, createUserStart } from '../redux/features/auth/appState';
 import { useDispatch } from 'react-redux';
+import { registerUser } from '../redux/actions/index';
 
 const theme = createTheme();
 const initialValues = {
@@ -34,7 +35,7 @@ export default function Register() {
 
   const register = (e) => {
     e.preventDefault();
-    dispatch(createUserStart(formData));
+    dispatch(registerUser({ username, password }));
     dispatch(setName(username));
     navigate('/dashboard');
   };

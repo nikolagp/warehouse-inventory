@@ -12,24 +12,25 @@ import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { Tooltip } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  getProductsFetch,
-  deleteProductStart,
-} from '../../redux/features/auth/appState';
+import { getProducts } from '../../redux/actions/index';
+// import {
+//   getProductsFetch,
+//   deleteProductStart,
+// } from '../../redux/features/auth/appState';
 
 export default function Orders() {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.app.products);
-  const isLoading = useSelector((state) => state.app.isLoading);
-  const error = useSelector((state) => state.app.error);
+  const products = useSelector((state) => state.products.products);
+  const isLoading = useSelector((state) => state.products.loading);
+  const error = useSelector((state) => state.products.error);
 
   useEffect(() => {
-    dispatch(getProductsFetch());
+    dispatch(getProducts());
   }, []);
 
   const handdleDeleteProduct = (id) => {
     if (window.confirm('Are you sure you want to delete')) {
-      dispatch(deleteProductStart(id));
+      // dispatch(deleteProductStart(id));
     }
     console.log(id);
   };

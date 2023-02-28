@@ -15,52 +15,52 @@ import { loginStatusStart } from './redux/features/auth/appState';
 axios.defaults.withCredentials = true;
 
 function App() {
-  const isLoggedIn = useSelector((state) => state.app.isLoggedIn);
-  const dispatch = useDispatch();
+  // const isLoggedIn = useSelector((state) => state.reducer.isLoggedIn);
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(loginStatusStart());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(loginStatusStart());
+  // }, []);
 
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          {!isLoggedIn && (
-            <>
-              <Route path="/" element={<Home />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/login" element={<Login />} />
-            </>
+          {/* {!isLoggedIn && (
+            <> */}
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          {/* </>
           )}
           {isLoggedIn && (
-            <>
-              <Route
-                path="/dashboard"
-                element={
-                  <Sidebar>
-                    <UserDashboard />
-                  </Sidebar>
-                }
-              />
-              <Route
-                path="/addproduct"
-                element={
-                  <Sidebar>
-                    <AddProduct />
-                  </Sidebar>
-                }
-              />
-              <Route
-                path="/product/:id"
-                element={
-                  <Sidebar>
-                    <Product />
-                  </Sidebar>
-                }
-              />
-            </>
-          )}
+            <> */}
+          <Route
+            path="/dashboard"
+            element={
+              <Sidebar>
+                <UserDashboard />
+              </Sidebar>
+            }
+          />
+          <Route
+            path="/addproduct"
+            element={
+              <Sidebar>
+                <AddProduct />
+              </Sidebar>
+            }
+          />
+          <Route
+            path="/product/:id"
+            element={
+              <Sidebar>
+                <Product />
+              </Sidebar>
+            }
+          />
+          {/* </>
+          )} */}
           <Route path="/*" element={<Home to="/" />} />
         </Routes>
       </BrowserRouter>

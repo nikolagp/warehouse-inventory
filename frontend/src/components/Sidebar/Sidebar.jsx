@@ -72,7 +72,7 @@ const mdTheme = createTheme();
 
 function Sidebar(props) {
   const dispatch = useDispatch();
-  const name = useSelector((state) => state.app.name);
+  // const name = useSelector((state) => state.app.name);
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -115,7 +115,7 @@ function Sidebar(props) {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Welcome, {name}
+              {/* Welcome, {name} */}
             </Typography>
           </Toolbar>
         </AppBar>
