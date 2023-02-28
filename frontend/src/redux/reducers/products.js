@@ -26,6 +26,24 @@ const products = (state = initialState, action) => {
         loading: true,
         error: action.message,
       };
+    case type.ADD_PRODUCT_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+    case type.ADD_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        // products: action.products,
+        products: [action.product],
+      };
+    case type.ADD_PRODUCT_FAILED:
+      return {
+        ...state,
+        loading: true,
+        error: action.message,
+      };
     default:
       return state;
   }

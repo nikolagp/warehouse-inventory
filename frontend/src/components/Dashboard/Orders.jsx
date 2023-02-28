@@ -58,9 +58,9 @@ export default function Orders() {
         </TableHead>
         <TableBody>
           {!isLoading && products.length
-            ? products.map((product) => (
-                <TableRow key={product.id}>
-                  <TableCell>{product.id}</TableCell>
+            ? products.map((product, index) => (
+                <TableRow key={index}>
+                  <TableCell>{index + 1}</TableCell>
                   <TableCell>{product.name}</TableCell>
                   <TableCell>{product.category}</TableCell>
                   <TableCell>{product.price}</TableCell>

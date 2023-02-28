@@ -8,6 +8,14 @@ export function getProducts(products) {
   };
 }
 
+// Add products
+export function addProduct(product) {
+  return {
+    type: type.ADD_PRODUCT_REQUESTED,
+    payload: product,
+  };
+}
+
 // Get product by ID
 // export function getProductById(product) {
 //   return {

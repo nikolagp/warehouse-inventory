@@ -12,12 +12,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import { SET_LOGIN, SET_NAME } from '../redux/features/auth/authSlice';
-import {
-  setLogin,
-  setName,
-  registerUsers,
-  loginUserStart,
-} from '../redux/features/auth/appState';
+// import {
+//   setLogin,
+//   setName,
+//   registerUsers,
+//   loginUserStart,
+// } from '../redux/features/auth/appState';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../redux/actions/index';
@@ -40,7 +40,6 @@ export default function Login() {
     e.preventDefault();
     dispatch(loginUser(username, password));
     navigate('/dashboard');
-    // dispatch(setName(username));
   };
 
   const handleChange = (e) => {

@@ -3,8 +3,9 @@ import { Button, TextField, Box } from '@mui/material';
 import axios from 'axios';
 import Title from '../components/Dashboard/Title';
 import { useNavigate } from 'react-router-dom';
-import { addProductStart } from '../redux/features/auth/appState';
+// import { addProductStart } from '../redux/features/auth/appState';
 import { useDispatch } from 'react-redux';
+import { addProduct } from '../redux/actions';
 // import { useSelector } from 'react-redux';
 
 const Form = () => {
@@ -23,7 +24,7 @@ const Form = () => {
   });
 
   const handleSubmit = (formData) => {
-    dispatch(addProductStart(formData));
+    dispatch(addProduct(formData));
     navigate('/dashboard');
   };
 
