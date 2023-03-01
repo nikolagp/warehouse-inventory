@@ -2,33 +2,19 @@ import axios from 'axios';
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 import * as type from '../types';
 
-const apiUrl = 'http://localhost:3001/products';
-
 // Fetch all products
-function getApi() {
-  return fetch(apiUrl, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((response) => response.json())
-    .catch((error) => {
-      throw error;
-    });
-}
-
-function* fetchProducts(action) {
+function* fetchProducts() {
   try {
-    const products = yield call(getApi);
-    yield put({ type: type.GET_PRODUCTS_SUCCESS, products: products });
+    const products = yield call(() =>
+      axios.get('http://localhost:3001/products')
+    );
+    yield put({ type: type.GET_PRODUCTS_SUCCESS, products: products.data });
   } catch (error) {
     yield put({ type: type.GET_PRODUCTS_FAILED, message: error.message });
   }
 }
 
 // Add new products
-
 function* addProduct({ payload }) {
   try {
     const products = yield call(() =>
@@ -83,9 +69,9 @@ function* previewProduct(action) {
 
 function* productSaga() {
   yield takeEvery(type.GET_PRODUCTS_REQUESTED, fetchProducts);
+  yield takeEvery(type.PREVIEW_PRODUCT_REQUESTED, previewProduct);
   yield takeLatest(type.ADD_PRODUCT_REQUESTED, addProduct);
   yield takeLatest(type.DELETE_PRODUCTS_REQUESTED, deleteProduct);
-  yield takeEvery(type.PREVIEW_PRODUCT_REQUESTED, previewProduct);
 }
 
 export default productSaga;

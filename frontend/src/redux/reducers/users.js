@@ -79,31 +79,3 @@ const authUser = (state = initialState, action) => {
 };
 
 export { authUser };
-
-// const loginUser = (state = initialState, action) => {
-//   switch (action.type) {
-//     case type.USER_LOGIN_REQUESTED:
-//       return {
-//         ...state,
-//         isLoggedIn: false,
-//       };
-//     case type.USER_LOGIN_SUCCESS:
-//       return {
-//         ...state,
-//         isLoggedIn: true,
-//       };
-//     case type.USER_LOGIN_FAILED:
-//       return {
-//         ...state,
-//         error: action.message,
-//         isLoggedIn: false,
-//       };
-//     case type.SET_NAME:
-//       return {
-//         ...state,
-//         name: action.name,
-//       };
-//     default:
-//       return state;
-//   }
-// };

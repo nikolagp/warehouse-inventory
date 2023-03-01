@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useEffect } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -13,10 +12,6 @@ import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined
 import { Tooltip } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteProducts, getProducts } from '../../redux/actions/index';
-// import {
-//   getProductsFetch,
-//   deleteProductStart,
-// } from '../../redux/features/auth/appState';
 
 export default function Orders() {
   const dispatch = useDispatch();

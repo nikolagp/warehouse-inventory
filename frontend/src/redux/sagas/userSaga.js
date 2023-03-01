@@ -1,21 +1,11 @@
 import axios from 'axios';
 import { call, put, takeLatest, takeEvery } from 'redux-saga/effects';
 import { setLogin, setName } from '../actions';
-// import {
-//   USER_REGISTER_REQUESTED,
-//   USER_REGISTER_SUCCESS,
-//   USER_REGISTER_FAILED,
-//   USER_LOGIN_REQUESTED,
-//   USER_LOGIN_SUCCESS,
-//   USER_LOGIN_FAILED,
-// } from '../types';
-// import { loginRequested, loginSuccess, loginFailed, setName } from '../actions';
 import * as type from '../types';
 
 // Register a user
 function* registerUser(action) {
   try {
-    // const { username, password } = action.payload;
     const apiUrl = 'http://localhost:3001/auth';
     const response = yield call(fetch, apiUrl, {
       method: 'POST',
@@ -46,7 +36,6 @@ function* loginUser(action) {
   try {
     const { username, password } = action.payload;
     const response = yield call(loginApiCall, username, password);
-    // If login is successful, set the token in local storage and update state
     if (response.status === 200 && response.data.accessToken) {
       localStorage.setItem('accessToken', response.data.accessToken);
       localStorage.setItem('name', response.data.name);

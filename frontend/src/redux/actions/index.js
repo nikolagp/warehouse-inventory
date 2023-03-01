@@ -7,7 +7,6 @@ export function getProducts(products) {
     payload: products,
   };
 }
-
 // Delete a product
 export function deleteProducts(productId) {
   return {
@@ -15,7 +14,6 @@ export function deleteProducts(productId) {
     payload: productId,
   };
 }
-
 // Add products
 export function addProduct(product) {
   return {
@@ -23,7 +21,6 @@ export function addProduct(product) {
     payload: product,
   };
 }
-
 // Preview a product
 export function previewProduct(productId) {
   return {
@@ -31,6 +28,7 @@ export function previewProduct(productId) {
     payload: productId,
   };
 }
+
 ////////////////////////////////////////////////////////////////////////
 // Register user
 export function registerUser(isLoggedIn) {
@@ -39,7 +37,6 @@ export function registerUser(isLoggedIn) {
     payload: isLoggedIn,
   };
 }
-
 // Login user
 export function loginUser(username, password) {
   return {
@@ -47,38 +44,24 @@ export function loginUser(username, password) {
     payload: { username, password },
   };
 }
-
+// Login status
 export function loginStatus(isLoggedIn) {
   return {
     type: type.LOGIN_STATUS_REQUESTED,
     payload: isLoggedIn,
   };
 }
-
+// Set Login status
 export function setLogin(isLoggedIn) {
   return {
     type: type.SET_LOGIN,
     payload: isLoggedIn,
   };
 }
-
+// Set Name
 export function setName(name) {
   return {
     type: type.SET_NAME,
     payload: name,
   };
 }
-
-// export function loginSuccess(data) {
-//   return {
-//     type: type.USER_LOGIN_SUCCESS,
-//     payload: data,
-//   };
-// }
-
-// export function loginFailed(error) {
-//   return {
-//     type: type.USER_LOGIN_FAILED,
-//     payload: error,
-//   };
-// }

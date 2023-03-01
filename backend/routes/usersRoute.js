@@ -66,7 +66,6 @@ router.get('/auth', validateToken, (req, res) => {
   res.json(req.user);
 });
 
-// router.get('/auth', validateToken, (req, res) => {
 router.get('/jwt', validateToken, (req, res) => {
   res.json(req.user);
 });

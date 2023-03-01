@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { Button, TextField, Box } from '@mui/material';
-import axios from 'axios';
 import Title from '../components/Dashboard/Title';
 import { useNavigate } from 'react-router-dom';
-// import { addProductStart } from '../redux/features/auth/appState';
 import { useDispatch } from 'react-redux';
 import { addProduct } from '../redux/actions';
-// import { useSelector } from 'react-redux';
 
 const Form = () => {
   let navigate = useNavigate();

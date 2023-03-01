@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,7 +11,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom';
-import { setName, createUserStart } from '../redux/features/auth/appState';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../redux/actions/index';
 
@@ -36,7 +35,6 @@ export default function Register() {
   const register = (e) => {
     e.preventDefault();
     dispatch(registerUser({ username, password }));
-    // dispatch(setName(username));
     navigate('/dashboard');
   };
 
