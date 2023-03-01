@@ -36,7 +36,7 @@ export default function Register() {
   const register = (e) => {
     e.preventDefault();
     dispatch(registerUser({ username, password }));
-    dispatch(setName(username));
+    // dispatch(setName(username));
     navigate('/dashboard');
   };
 

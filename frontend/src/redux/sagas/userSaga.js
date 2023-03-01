@@ -15,6 +15,7 @@ import * as type from '../types';
 // Register a user
 function* registerUser(action) {
   try {
+    // const { username, password } = action.payload;
     const apiUrl = 'http://localhost:3001/auth';
     const response = yield call(fetch, apiUrl, {
       method: 'POST',
@@ -27,7 +28,8 @@ function* registerUser(action) {
     const data = yield response.json();
 
     if (response.ok) {
-      yield put({ type: type.USER_REGISTER_SUCCESS });
+      yield put({ type: type.USER_REGISTER_SUCCESS, payload: data });
+      yield put(setName(data));
     } else {
       yield put({ type: type.USER_REGISTER_FAILED, message: data.message });
     }

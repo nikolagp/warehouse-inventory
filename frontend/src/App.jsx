@@ -11,7 +11,7 @@ import Login from './pages/Login';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 // import { loginStatusStart } from './redux/features/auth/appState';
-import { loginStatus } from './redux/actions';
+import { loginStatus, setName } from './redux/actions';
 
 axios.defaults.withCredentials = true;
 

@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
         username: username,
         password: hash,
       });
-      res.json('SUCCESS');
+      res.json(username);
       return;
     });
   } catch (err) {

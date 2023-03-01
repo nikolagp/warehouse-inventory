@@ -12,7 +12,7 @@ import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { Tooltip } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProducts } from '../../redux/actions/index';
+import { deleteProducts, getProducts } from '../../redux/actions/index';
 // import {
 //   getProductsFetch,
 //   deleteProductStart,
@@ -28,11 +28,10 @@ export default function Orders() {
     dispatch(getProducts());
   }, []);
 
-  const handdleDeleteProduct = (id) => {
+  const handleDeleteProduct = (id) => {
     if (window.confirm('Are you sure you want to delete')) {
-      // dispatch(deleteProductStart(id));
+      dispatch(deleteProducts(id));
     }
-    console.log(id);
   };
 
   return (
@@ -77,7 +76,7 @@ export default function Orders() {
                       <DeleteForeverOutlinedIcon
                         cursor="pointer"
                         onClick={() => {
-                          handdleDeleteProduct(product.id);
+                          handleDeleteProduct(product.id);
                         }}
                       />
                     </Tooltip>

@@ -10,27 +10,24 @@ import Typography from '@mui/material/Typography';
 import { Grid, Tooltip } from '@mui/material';
 import Item from '@mui/material/ListItem';
 import { useNavigate } from 'react-router-dom';
-import { previewProductStart } from '.././redux/features/auth/appState';
 import { useDispatch, useSelector } from 'react-redux';
+import { previewProduct, deleteProducts } from '../redux/actions';
 
 function Product(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   let { id } = useParams();
-  const products = useSelector((state) => state.app.products);
-  // const [products, setProducts] = useState();
+  const products = useSelector((state) => state.products.products);
 
   useEffect(() => {
-    dispatch(previewProductStart(id));
-    // axios.get(`http://localhost:3001/products/byId/${id}`).then((response) => {
-    //   setProducts(response.data);
-    // });
+    dispatch(previewProduct(id));
   }, []);
 
-  const deleteProduct = (id) => {
-    axios.delete(`http://localhost:3001/products/${id}`).then(() => {
+  const handleDeleteProduct = (id) => {
+    if (window.confirm('Are you sure you want to delete')) {
+      dispatch(deleteProducts(id));
       navigate('/dashboard');
-    });
+    }
   };
 
   return (
@@ -77,7 +74,7 @@ function Product(props) {
                 <Button
                   cursor="pointer"
                   onClick={() => {
-                    deleteProduct(products.id);
+                    handleDeleteProduct(products.id);
                   }}
                 >
                   Delete

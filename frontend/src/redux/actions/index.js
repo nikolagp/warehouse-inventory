@@ -8,6 +8,14 @@ export function getProducts(products) {
   };
 }
 
+// Delete a product
+export function deleteProducts(productId) {
+  return {
+    type: type.DELETE_PRODUCTS_REQUESTED,
+    payload: productId,
+  };
+}
+
 // Add products
 export function addProduct(product) {
   return {
@@ -16,14 +24,14 @@ export function addProduct(product) {
   };
 }
 
-// Get product by ID
-// export function getProductById(product) {
-//   return {
-//     type: type.GET_PRODUCTS_REQUESTED,
-//     payload: product.id,
-//   };
-// }
-
+// Preview a product
+export function previewProduct(productId) {
+  return {
+    type: type.PREVIEW_PRODUCT_REQUESTED,
+    payload: productId,
+  };
+}
+////////////////////////////////////////////////////////////////////////
 // Register user
 export function registerUser(isLoggedIn) {
   return {
