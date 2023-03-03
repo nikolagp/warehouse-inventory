@@ -1,5 +1,15 @@
 import axios from 'axios';
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
+import {
+  getProductsFailed,
+  getProductsSuccess,
+  addProductSucess,
+  addProductFailed,
+  deleteProductsSuccess,
+  deleteProductsFailed,
+  previewProductSuccess,
+  previewProductFailed,
+} from '../actions';
 import * as type from '../types';
 
 // Fetch all products
@@ -8,9 +18,9 @@ function* fetchProducts() {
     const products = yield call(() =>
       axios.get('http://localhost:3001/products')
     );
-    yield put({ type: type.GET_PRODUCTS_SUCCESS, products: products.data });
+    yield put(getProductsSuccess(products.data));
   } catch (error) {
-    yield put({ type: type.GET_PRODUCTS_FAILED, message: error.message });
+    yield put(getProductsFailed(error.message));
   }
 }
 
@@ -21,15 +31,12 @@ function* addProduct({ payload }) {
       axios.post('http://localhost:3001/products/', payload)
     );
     if (products.status === 200) {
-      yield put({ type: type.ADD_PRODUCT_SUCCESS, product: products.data });
+      yield put(addProductSucess(products.data));
     } else {
-      yield put({
-        type: type.ADD_PRODUCT_FAILED,
-        message: products.data.error,
-      });
+      yield put(addProductFailed(products.data.error));
     }
   } catch (error) {
-    yield put({ type: type.ADD_PRODUCT_FAILED, message: error.message });
+    yield put(addProductFailed(error.message));
   }
 }
 
@@ -41,13 +48,10 @@ function* deleteProduct(action) {
       axios.delete(`http://localhost:3001/products/${payload}`)
     );
     if (response.status === 200) {
-      yield put({ type: type.DELETE_PRODUCTS_SUCCESS, payload });
+      yield put(deleteProductsSuccess(payload));
     }
   } catch (error) {
-    yield put({
-      type: type.DELETE_PRODUCTS_FAILED,
-      message: error.message,
-    });
+    yield put(deleteProductsFailed(error.message));
   }
 }
 
@@ -58,12 +62,9 @@ function* previewProduct(action) {
     const response = yield call(() =>
       axios.get(`http://localhost:3001/products/byId/${payload}`)
     );
-    yield put({ type: type.PREVIEW_PRODUCT_SUCCESS, products: response.data });
+    yield put(previewProductSuccess(response.data));
   } catch (error) {
-    yield put({
-      type: type.PREVIEW_PRODUCT_FAILED,
-      message: error.message,
-    });
+    yield put(previewProductFailed(error.message));
   }
 }
 

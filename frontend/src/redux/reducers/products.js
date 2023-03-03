@@ -18,13 +18,13 @@ const products = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        products: action.products,
+        products: action.payload,
       };
     case type.GET_PRODUCTS_FAILED:
       return {
         ...state,
         loading: true,
-        error: action.message,
+        error: action.payload,
       };
     // Add products
     case type.ADD_PRODUCT_REQUESTED:
@@ -36,7 +36,7 @@ const products = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        products: [action.product],
+        products: action.payload,
       };
     case type.ADD_PRODUCT_FAILED:
       return {
@@ -62,7 +62,7 @@ const products = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-        error: null,
+        error: action.message,
       };
     // Preview products
     case type.PREVIEW_PRODUCT_REQUESTED:
@@ -73,7 +73,7 @@ const products = (state = initialState, action) => {
     case type.PREVIEW_PRODUCT_SUCCESS:
       return {
         ...state,
-        products: action.products,
+        products: action.payload,
         loading: false,
       };
     case type.PREVIEW_PRODUCT_FAILED:

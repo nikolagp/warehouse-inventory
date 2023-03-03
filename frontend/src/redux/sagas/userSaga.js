@@ -1,32 +1,37 @@
 import axios from 'axios';
 import { call, put, takeLatest, takeEvery } from 'redux-saga/effects';
-import { setLogin, setName } from '../actions';
+import {
+  loginStatusFailed,
+  loginStatusSuccess,
+  loginUserFailed,
+  loginUserSuccess,
+  registerUserFailed,
+  registerUserSuccess,
+  setLogin,
+  setName,
+} from '../actions';
 import * as type from '../types';
 
 // Register a user
 function* registerUser(action) {
   try {
     const apiUrl = 'http://localhost:3001/auth';
-    const response = yield call(fetch, apiUrl, {
-      method: 'POST',
+    const response = yield call(axios.post, apiUrl, action.payload, {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(action.payload),
     });
 
-    const data = yield response.json();
-
-    if (response.ok) {
-      yield put({ type: type.USER_REGISTER_SUCCESS, payload: data });
-      yield put(setName(data));
+    if (response.status === 200) {
+      yield put(registerUserSuccess(response.data));
     } else {
-      yield put({ type: type.USER_REGISTER_FAILED, message: data.message });
+      yield put(registerUserFailed(response.data.message));
     }
   } catch (error) {
-    yield put({ type: type.USER_REGISTER_FAILED, message: error.message });
+    yield put(registerUserFailed(error.message));
   }
 }
+
 // Login a user
 function loginApiCall(username, password) {
   return axios.post('http://localhost:3001/auth/login', { username, password });
@@ -39,12 +44,12 @@ function* loginUser(action) {
     if (response.status === 200 && response.data.accessToken) {
       localStorage.setItem('accessToken', response.data.accessToken);
       localStorage.setItem('name', response.data.name);
-      yield put({ type: type.USER_LOGIN_SUCCESS, payload: response.data });
+      yield put(loginUserSuccess(response.data));
     } else {
-      yield put({ type: type.USER_LOGIN_FAILED, payload: response.data.error });
+      yield put(loginUserFailed(response.data.error));
     }
   } catch (error) {
-    yield put({ type: type.USER_LOGIN_FAILED, payload: error });
+    yield put(loginUserFailed(error));
   }
 }
 
@@ -61,15 +66,11 @@ function* loginStatus(action) {
     if (response.data.error) {
       yield put(false);
     } else {
-      yield put({ type: type.LOGIN_STATUS_SUCCESS, payload: response.data });
-      yield put(setName(response.data.username));
+      yield put(loginStatusSuccess(response.data));
       yield put(setLogin(true));
     }
   } catch (error) {
-    yield put({
-      type: type.LOGIN_STATUS_FAILED,
-      payload: error,
-    });
+    yield put(loginStatusFailed(error));
   }
 }
 

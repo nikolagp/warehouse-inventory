@@ -12,12 +12,13 @@ const authUser = (state = initialState, action) => {
     case type.USER_REGISTER_REQUESTED:
       return {
         ...state,
-        isLoggedIn: false,
+        isLoggedIn: action.payload,
       };
     case type.USER_REGISTER_SUCCESS:
       return {
         ...state,
         isLoggedIn: true,
+        name: action.payload,
       };
     case type.USER_REGISTER_FAILED:
       return {

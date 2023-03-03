@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Products } = require('../models');
+const { validateToken } = require('../middleWare/AuthMiddleware');
 
 router.get('/', async (req, res) => {
   const listOfProducts = await Products.findAll();
