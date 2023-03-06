@@ -14,7 +14,7 @@ router.get('/byId/:id', async (req, res) => {
   res.json(products);
 });
 
-router.post('/', async (req, res) => {
+router.post('/', validateToken, async (req, res) => {
   const product = req.body;
   await Products.create(product);
   res.json(product);
