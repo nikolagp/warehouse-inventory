@@ -9,6 +9,7 @@ import {
   deleteProductsFailed,
   previewProductSuccess,
   previewProductFailed,
+  loginStatusFailed,
 } from '../actions';
 import * as type from '../types';
 
@@ -16,7 +17,9 @@ import * as type from '../types';
 function* fetchProducts() {
   try {
     const products = yield call(() =>
-      axios.get('http://localhost:3001/products')
+      axios.get('http://localhost:3001/products', {
+        headers: { accessToken: localStorage.getItem('accessToken') },
+      })
     );
     yield put(getProductsSuccess(products.data));
   } catch (error) {
@@ -28,7 +31,9 @@ function* fetchProducts() {
 function* addProduct({ payload }) {
   try {
     const products = yield call(() =>
-      axios.post('http://localhost:3001/products/', payload)
+      axios.post('http://localhost:3001/products/', payload, {
+        headers: { accessToken: localStorage.getItem('accessToken') },
+      })
     );
     if (products.status === 200) {
       yield put(addProductSucess(products.data));
@@ -45,7 +50,9 @@ function* deleteProduct(action) {
   try {
     const { payload } = action;
     const response = yield call(() =>
-      axios.delete(`http://localhost:3001/products/${payload}`)
+      axios.delete(`http://localhost:3001/products/${payload}`, {
+        headers: { accessToken: localStorage.getItem('accessToken') },
+      })
     );
     if (response.status === 200) {
       yield put(deleteProductsSuccess(payload));
@@ -60,7 +67,9 @@ function* previewProduct(action) {
   try {
     const { payload } = action;
     const response = yield call(() =>
-      axios.get(`http://localhost:3001/products/byId/${payload}`)
+      axios.get(`http://localhost:3001/products/byId/${payload}`, {
+        headers: { accessToken: localStorage.getItem('accessToken') },
+      })
     );
     yield put(previewProductSuccess(response.data));
   } catch (error) {

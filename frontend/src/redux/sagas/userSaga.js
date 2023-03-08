@@ -68,9 +68,11 @@ function* loginStatus(action) {
     } else {
       yield put(loginStatusSuccess(response.data));
       yield put(setLogin(true));
+      yield put(setName(response.data.username));
     }
   } catch (error) {
     yield put(loginStatusFailed(error));
+    localStorage.clear();
   }
 }
 

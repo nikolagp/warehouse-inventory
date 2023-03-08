@@ -42,24 +42,24 @@ const jwt = require('jsonwebtoken');
 //   res.json(product);
 // });
 
-router.get('/', validateToken, async (req, res) => {
+router.get('/', async (req, res) => {
   const listOfProducts = await Products.findAll();
   res.json(listOfProducts);
 });
 
-router.get('/byId/:id', validateToken, async (req, res) => {
+router.get('/byId/:id', async (req, res) => {
   const id = req.params.id;
   const products = await Products.findByPk(id);
   res.json(products);
 });
 
-router.post('/', validateToken, async (req, res) => {
+router.post('/', async (req, res) => {
   const product = req.body;
   await Products.create(product);
   res.json(product);
 });
 
-router.delete('/:productId', validateToken, async (req, res) => {
+router.delete('/:productId', async (req, res) => {
   const productId = req.params.productId;
   await Products.destroy({
     where: {
