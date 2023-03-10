@@ -113,6 +113,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { previewProduct, deleteProducts })(
-  Product
-);
+const mapDispatchToProps = {
+  previewProduct,
+  deleteProducts,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Product);
