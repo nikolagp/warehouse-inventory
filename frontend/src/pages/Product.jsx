@@ -15,15 +15,15 @@ import { previewProduct, deleteProducts } from '../redux/actions';
 function Product(props) {
   // const navigate = useNavigate();
   let { id } = useParams();
-  const { product } = props;
+  const { product, previewProduct, deleteProducts } = props;
 
   useEffect(() => {
-    props.previewProduct(id);
+    previewProduct(id);
   }, []);
 
   const handleDeleteProduct = (id) => {
     if (window.confirm('Are you sure you want to delete')) {
-      props.deleteProducts(id);
+      deleteProducts(id);
       // navigate('/dashboard');
     }
   };
@@ -107,15 +107,13 @@ function Product(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    product: state.products.products,
-  };
-};
+const mapStateToProps = (state) => ({
+  product: state.products.products,
+});
 
-const mapDispatchToProps = {
-  previewProduct,
-  deleteProducts,
-};
+const mapDispatchToProps = (dispatch) => ({
+  previewProduct: (id) => dispatch(previewProduct(id)),
+  deleteProducts: (id) => dispatch(deleteProducts(id)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);

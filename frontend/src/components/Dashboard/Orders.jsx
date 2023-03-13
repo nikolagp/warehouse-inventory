@@ -10,27 +10,24 @@ import { Link } from 'react-router-dom';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { Tooltip } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteProducts, getProducts } from '../../redux/actions/index';
+import { connect } from 'react-redux';
+import { getProducts, deleteProducts } from '../../redux/actions/index';
 
-export default function Orders() {
-  const dispatch = useDispatch();
-  const products = useSelector((state) => state.products.products);
-  const isLoading = useSelector((state) => state.products.loading);
-  const error = useSelector((state) => state.products.error);
+function Orders(props) {
+  const { products, isLoading, error, getProducts, deleteProducts } = props;
 
   useEffect(() => {
-    dispatch(getProducts());
+    getProducts();
   }, []);
 
   const handleDeleteProduct = (id) => {
     if (window.confirm('Are you sure you want to delete')) {
-      dispatch(deleteProducts(id));
+      deleteProducts(id);
     }
   };
 
   return (
-    <React.Fragment>
+    <>
       {!isLoading && <Title>Recent Orders</Title>}
       {isLoading && <Title>Loading...</Title>}
       {!isLoading && error ? <Title>Error: {error}</Title> : null}
@@ -51,7 +48,7 @@ export default function Orders() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {!isLoading && products.length
+          {!isLoading && products && products.length
             ? products.map((product, index) => (
                 <TableRow key={index}>
                   <TableCell>{index + 1}</TableCell>
@@ -81,6 +78,19 @@ export default function Orders() {
             : null}
         </TableBody>
       </Table>
-    </React.Fragment>
+    </>
   );
 }
+
+const mapStateToProps = (state) => ({
+  products: state.products.products,
+  isLoading: state.products.loading,
+  error: state.products.error,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getProducts: () => dispatch(getProducts()),
+  deleteProducts: (id) => dispatch(deleteProducts(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Orders);
