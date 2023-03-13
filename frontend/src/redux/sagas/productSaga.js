@@ -79,9 +79,9 @@ function* previewProduct(action) {
 
 function* productSaga() {
   yield takeEvery(type.GET_PRODUCTS_REQUESTED, fetchProducts);
-  yield takeEvery(type.PREVIEW_PRODUCT_REQUESTED, previewProduct);
+  yield takeLatest(type.PREVIEW_PRODUCT_REQUESTED, previewProduct);
   yield takeLatest(type.ADD_PRODUCT_REQUESTED, addProduct);
-  yield takeEvery(type.DELETE_PRODUCTS_REQUESTED, deleteProduct);
+  yield takeLatest(type.DELETE_PRODUCTS_REQUESTED, deleteProduct);
 }
 
 export default productSaga;
